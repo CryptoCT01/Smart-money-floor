@@ -27,6 +27,8 @@ Open `/report` on the floor. Each of 3 tasks is run **both ways**: agent **hired
 
 ![Agent Advantage Report](report/advantage.png)
 
+**60s demo:** [report/Smart-Money-Floor-60s.mp4](report/Smart-Money-Floor-60s.mp4) (58s · 1440×900)
+
 ## PancakeSwap partner
 
 - Traders: Marlin grid + Swordfish Pancake V2 fee quote (`/api/quote`) — **executed: false** until you SWAP
