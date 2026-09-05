@@ -29,3 +29,4 @@ public_url.txt
 **/Smart Money Floor — HANDOVER.md
 .local/
 *.log
+.gh_push_token
