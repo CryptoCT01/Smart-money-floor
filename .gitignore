@@ -1,0 +1,25 @@
+# secrets / local runtime
+.env
+.env.*
+**/.twak/
+**/wallet.json
+public_url.txt
+*.pem
+*.key
+
+# handover (local only — never push)
+HANDOVER.md
+HANDOVER*.md
+Smart Money Floor — HANDOVER.md
+
+# backups / audits / OS
+**/dashboard.bak*
+*.bak*
+_audit/
+__pycache__/
+*.pyc
+.DS_Store
+.Python
+.venv/
+venv/
+logs/

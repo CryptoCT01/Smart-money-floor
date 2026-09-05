@@ -1,0 +1,41 @@
+{
+  "ok": true,
+  "generated": "2026-09-03T08:23:05Z",
+  "title": "Agent Advantage Report \u2014 Smart Money Floor",
+  "tasks": [
+    {
+      "name": "BSC major tape (trading / security)",
+      "category": "trading",
+      "manualSec": 180,
+      "agentMs": 1313,
+      "manualHow": "DexScreener + GoPlus in a browser, 11 tokens by hand",
+      "agentHow": "DexScreener + GoPlus in one floor round-trip",
+      "output": "WBNB $701.98  1.98%  liq $64277308.07  GoPlus screened 10  flags ['SOL', 'DOGE']",
+      "agentSec": 1.313,
+      "speedup": 137.1
+    },
+    {
+      "name": "Yield route (yield optimisation)",
+      "category": "yield",
+      "manualSec": 300,
+      "agentMs": 648,
+      "manualHow": "DeFiLlama yields UI, filter BSC, TVL, sort APR",
+      "agentHow": "DeFiLlama pools API, BSC \u2265 $1M, APR cap, ranked",
+      "output": "29 pools  top uniswap-v3 USDT-WBNB 45.03208%  TVL $3572685.0  pancake 2  venus 16",
+      "agentSec": 0.648,
+      "speedup": 463.0
+    },
+    {
+      "name": "Grid band on CAKE (grid trading)",
+      "category": "grid",
+      "manualSec": 240,
+      "agentMs": 422,
+      "manualHow": "CAKE chart, mark \u00b1 realized 24h, place 12 levels",
+      "agentHow": "Live CAKE spot + 24h change \u2192 12-level band",
+      "output": "CAKE $1.91  24h 4.58%  liq $17915411.22",
+      "agentSec": 0.422,
+      "speedup": 568.7
+    }
+  ],
+  "note": "Agent times are wall-clock of this machine against live APIs. Manual times are conservative operator estimates for the same three jobs. Outputs are live fetches, not backfills."
+}

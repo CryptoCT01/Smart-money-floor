@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>Agent Advantage Report</title>
+<style>
+body{font-family:ui-sans-serif,system-ui;background:#07090d;color:#eef1f6;margin:40px auto;max-width:1100px}
+h1{font-size:1.8rem} td,th{border-bottom:1px solid #222;padding:10px 8px;text-align:left;vertical-align:top}
+code{color:#e8c547;font-size:.78rem} .sub{color:#8b95a4}
+</style></head><body>
+<h1>Agent Advantage Report</h1>
+<p class="sub">Smart Money Floor · 2026-09-03T08:23:05Z · live BSC APIs</p>
+<p>Agent times are wall-clock of this machine against live APIs. Manual times are conservative operator estimates for the same three jobs. Outputs are live fetches, not backfills.</p>
+<table><thead><tr><th>Task</th><th>Track</th><th>Manual</th><th>Agent</th><th>Speedup</th><th>Live output</th></tr></thead>
+<tbody><tr><td>BSC major tape (trading / security)</td><td>trading</td><td>180s</td><td>1.313s</td><td>×137.1</td><td><code>WBNB $701.98  1.98%  liq $64277308.07  GoPlus screened 10  flags ['SOL', 'DOGE']</code></td></tr><tr><td>Yield route (yield optimisation)</td><td>yield</td><td>300s</td><td>0.648s</td><td>×463.0</td><td><code>29 pools  top uniswap-v3 USDT-WBNB 45.03208%  TVL $3572685.0  pancake 2  venus 16</code></td></tr><tr><td>Grid band on CAKE (grid trading)</td><td>grid</td><td>240s</td><td>0.422s</td><td>×568.7</td><td><code>CAKE $1.91  24h 4.58%  liq $17915411.22</code></td></tr></tbody></table>
+<p class="sub">TermiX requires 3 tasks both ways, one trading/security. This file is regenerated from live fetches — never hand-typed prints.</p>
+</body></html>

@@ -1,0 +1,3 @@
+# Day 1 uses Python stdlib only (http.server, urllib).
+# Flask is optional if you later swap the server.
+flask>=3.0.0
