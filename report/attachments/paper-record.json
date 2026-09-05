@@ -1,0 +1,169 @@
+{
+  "ok": true,
+  "generated": "2026-09-05T14:58:33Z",
+  "note": "Paper record from live public candles. Zero on-chain fills. Win rate / window / risk are measured on this series.",
+  "marlin": {
+    "ok": true,
+    "kind": "grid",
+    "label": "PAPER \u2014 live Binance candles, not on-chain fills",
+    "window": {
+      "from": "2026-08-29T15:00Z",
+      "to": "2026-09-05T14:00Z",
+      "hours": 168
+    },
+    "capUsd": 100,
+    "trades": 10,
+    "roundtrips": 5,
+    "wins": 4,
+    "losses": 1,
+    "winRatePct": 80.0,
+    "pnlUsd": 2.889,
+    "pnlPct": 2.889,
+    "maxDrawdownPct": 0.892,
+    "risk": {
+      "perTradeFrac": 0.35,
+      "capUsd": 100,
+      "maxDrawdownUsd": 0.8916
+    },
+    "lastEquityUsd": 102.889,
+    "sampleTrades": [
+      {
+        "side": "buy",
+        "px": 1.845,
+        "t": 1788253200,
+        "usd": 35.331629834254144
+      },
+      {
+        "side": "sell",
+        "px": 1.844,
+        "t": 1788318000,
+        "usd": 35.312479899384634,
+        "pnlUsd": -0.019149934869510332
+      },
+      {
+        "side": "buy",
+        "px": 1.802,
+        "t": 1788339600,
+        "usd": 35.324927357049816
+      },
+      {
+        "side": "sell",
+        "px": 1.825,
+        "t": 1788390000,
+        "usd": 35.77580045872137,
+        "pnlUsd": 0.45087310167155437
+      },
+      {
+        "side": "buy",
+        "px": 1.983,
+        "t": 1788498000,
+        "usd": 35.48273294263486
+      },
+      {
+        "side": "sell",
+        "px": 2.043,
+        "t": 1788516000,
+        "usd": 36.556340595967235,
+        "pnlUsd": 1.073607653332374
+      },
+      {
+        "side": "buy",
+        "px": 1.973,
+        "t": 1788526800,
+        "usd": 35.858495621301195
+      },
+      {
+        "side": "sell",
+        "px": 1.997,
+        "t": 1788588000,
+        "usd": 36.294686140769635,
+        "pnlUsd": 0.4361905194684397
+      }
+    ],
+    "candles": 168,
+    "symbol": "CAKE",
+    "venue": "Pancake grid paper"
+  },
+  "swordfish": {
+    "ok": true,
+    "kind": "trend",
+    "label": "PAPER \u2014 live Binance candles, not on-chain fills",
+    "window": {
+      "from": "2026-08-29T15:00Z",
+      "to": "2026-09-05T14:00Z",
+      "hours": 168
+    },
+    "capUsd": 100,
+    "trades": 27,
+    "roundtrips": 13,
+    "wins": 2,
+    "losses": 11,
+    "winRatePct": 15.38,
+    "pnlUsd": 2.963,
+    "pnlPct": 2.963,
+    "maxDrawdownPct": 1.027,
+    "risk": {
+      "perTradeFrac": 0.35,
+      "capUsd": 100,
+      "maxDrawdownUsd": 1.0273
+    },
+    "lastEquityUsd": 102.963,
+    "sampleTrades": [
+      {
+        "side": "sell",
+        "px": 720.35,
+        "t": 1788501600,
+        "usd": 35.239085280080054,
+        "pnlUsd": -0.1883396658961729
+      },
+      {
+        "side": "buy",
+        "px": 722.52,
+        "t": 1788516000,
+        "usd": 35.36150606291257
+      },
+      {
+        "side": "sell",
+        "px": 715.2,
+        "t": 1788523200,
+        "usd": 35.00325130957631,
+        "pnlUsd": -0.35825475333626144
+      },
+      {
+        "side": "buy",
+        "px": 719.45,
+        "t": 1788537600,
+        "usd": 35.23611689924488
+      },
+      {
+        "side": "sell",
+        "px": 716.9,
+        "t": 1788541200,
+        "usd": 35.11122691648989,
+        "pnlUsd": -0.1248899827549863
+      },
+      {
+        "side": "buy",
+        "px": 718.91,
+        "t": 1788544800,
+        "usd": 35.19240540528063
+      },
+      {
+        "side": "sell",
+        "px": 717.42,
+        "t": 1788555600,
+        "usd": 35.11946625565986,
+        "pnlUsd": -0.07293914962077253
+      },
+      {
+        "side": "buy",
+        "px": 718.69,
+        "t": 1788559200,
+        "usd": 35.16687670291336
+      }
+    ],
+    "candles": 168,
+    "symbol": "WBNB",
+    "venue": "BSC trend paper"
+  }
+}

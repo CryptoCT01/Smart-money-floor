@@ -1,0 +1,18 @@
+{
+  "mode": "manual",
+  "pages": [
+    "DeFiLlama yields"
+  ],
+  "errors": [],
+  "pancakeCount": 41,
+  "topPool": {
+    "symbol": "USDT-WBNB",
+    "apy": 34.58224,
+    "tvlUsd": 385353
+  },
+  "suggestedLower": null,
+  "suggestedUpper": null,
+  "inRange": null,
+  "action": null,
+  "note": "Pool list only. No tick range, no in-range test, no reset plan."
+}

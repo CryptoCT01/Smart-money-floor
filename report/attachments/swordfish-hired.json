@@ -1,0 +1,114 @@
+{
+  "agent": "swordfish",
+  "category": "trading / security",
+  "hired": true,
+  "price": {
+    "hireUsd": 0,
+    "capUsd": 100.0
+  },
+  "headline": "GoPlus-gated BSC tape + Pancake quote (no tx)",
+  "output": {
+    "tape": [
+      {
+        "label": "WBNB",
+        "value": 768.45,
+        "fmt": "usd"
+      },
+      {
+        "label": "24h",
+        "value": 8.0,
+        "fmt": "pct"
+      },
+      {
+        "label": "Liq",
+        "value": 91029937.39,
+        "fmt": "usd_short"
+      },
+      {
+        "label": "Majors 24h vol",
+        "value": 104310321.42,
+        "fmt": "usd_short"
+      },
+      {
+        "label": "Holders",
+        "value": 7993906,
+        "fmt": "int"
+      },
+      {
+        "label": "Honeypot",
+        "value": "CLEAR",
+        "fmt": "text"
+      }
+    ],
+    "wbnb": {
+      "symbol": "WBNB",
+      "priceUsd": 768.45,
+      "priceChange24h": 8.0,
+      "liquidityUsd": 91029937.39,
+      "volume24h": 36104254.2,
+      "dex": "pancakeswap",
+      "pair": "WBNB/USDT",
+      "url": "https://dexscreener.com/bsc/0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae",
+      "updatedAt": null
+    },
+    "goplusFlags": [
+      "SOL",
+      "DOGE"
+    ],
+    "goplusClear": [
+      "WBNB",
+      "BTCB",
+      "ETH",
+      "CAKE",
+      "USDT",
+      "USDC",
+      "XRP",
+      "ADA"
+    ],
+    "pancakeQuote": {
+      "ok": true,
+      "executed": false,
+      "pancake": true,
+      "venue": "PancakeSwap V2 fee model \u00b7 quote only",
+      "from": "BNB",
+      "to": "CAKE",
+      "amountIn": 0.02,
+      "usdIn": 15.369,
+      "feeBps": 25,
+      "amountOut": 6.905666,
+      "minOut": 6.871137,
+      "slippage": 0.005,
+      "priceImpactPct": 0.0,
+      "liquidityUsd": 91029937.39,
+      "goplus": {
+        "symbol": "CAKE",
+        "safe": true,
+        "honeypot": false
+      },
+      "blocked": false,
+      "reason": "No tx. Funds never leave the wallet."
+    },
+    "paperRecord": {
+      "winRatePct": 15.38,
+      "window": {
+        "from": "2026-08-29T15:00Z",
+        "to": "2026-09-05T14:00Z",
+        "hours": 168
+      },
+      "maxDrawdownPct": 1.027,
+      "roundtrips": 13,
+      "label": "PAPER \u2014 live Binance candles, not on-chain fills"
+    }
+  },
+  "quality": {
+    "fields": [
+      "tape",
+      "goplusFlags",
+      "pancakeQuote",
+      "paperRecord"
+    ],
+    "actionable": true,
+    "safetyGate": true,
+    "fundsMoved": false
+  }
+}

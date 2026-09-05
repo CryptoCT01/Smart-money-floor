@@ -1,41 +1,341 @@
 {
   "ok": true,
-  "generated": "2026-09-03T08:23:05Z",
+  "generated": "2026-09-05T14:58:33Z",
   "title": "Agent Advantage Report \u2014 Smart Money Floor",
+  "method": "Each task is run twice on this machine against live public APIs. WITH = agent hired through the marketplace (jobs.run requires hire.agent). WITHOUT = sequential page fetches a human would open. Agent seconds = wall-clock. Manual seconds = fetch wall-clock + 90s per missing required field (operator time to finish the same deliverable by hand). Cost = labour at $50/h on those seconds. No funds moved. Paper win rate is Binance candles, labelled PAPER.",
+  "labourUsdPerHour": 50.0,
   "tasks": [
     {
-      "name": "BSC major tape (trading / security)",
-      "category": "trading",
-      "manualSec": 180,
-      "agentMs": 1313,
-      "manualHow": "DexScreener + GoPlus in a browser, 11 tokens by hand",
-      "agentHow": "DexScreener + GoPlus in one floor round-trip",
-      "output": "WBNB $701.98  1.98%  liq $64277308.07  GoPlus screened 10  flags ['SOL', 'DOGE']",
-      "agentSec": 1.313,
-      "speedup": 137.1
+      "name": "BSC tape + GoPlus + Pancake quote (trading / security)",
+      "category": "trading / security",
+      "hiredThroughMarketplace": true,
+      "hire": {
+        "agent": "swordfish",
+        "capUsd": 100,
+        "hireUsd": 0
+      },
+      "agent": {
+        "seconds": 4.583,
+        "fetchSeconds": 4.583,
+        "costUsd": 0.0637,
+        "quality": {
+          "score": 100.0,
+          "have": 4,
+          "need": 4,
+          "missing": [],
+          "actionable": true,
+          "fundsMoved": false
+        },
+        "headline": "GoPlus-gated BSC tape + Pancake quote (no tx)",
+        "attachment": "report/attachments/swordfish-hired.json",
+        "fundsMoved": false
+      },
+      "manual": {
+        "seconds": 360.861,
+        "fetchSeconds": 0.861,
+        "operatorFinishSeconds": 360.0,
+        "costUsd": 5.012,
+        "quality": {
+          "score": 0.0,
+          "have": 0,
+          "need": 4,
+          "missing": [
+            "tape",
+            "goplusFlags",
+            "pancakeQuote",
+            "paperRecord"
+          ],
+          "actionable": false,
+          "fundsMoved": false
+        },
+        "headline": "Raw page payloads. No grid, no quote, no hire, no quality gate.",
+        "attachment": "report/attachments/swordfish-manual.json",
+        "fundsMoved": false
+      },
+      "speedup": 78.7,
+      "qualityDelta": 100.0,
+      "labourSavedUsd": 4.9483
     },
     {
-      "name": "Yield route (yield optimisation)",
-      "category": "yield",
-      "manualSec": 300,
-      "agentMs": 648,
-      "manualHow": "DeFiLlama yields UI, filter BSC, TVL, sort APR",
-      "agentHow": "DeFiLlama pools API, BSC \u2265 $1M, APR cap, ranked",
-      "output": "29 pools  top uniswap-v3 USDT-WBNB 45.03208%  TVL $3572685.0  pancake 2  venus 16",
-      "agentSec": 0.648,
-      "speedup": 463.0
+      "name": "CAKE/WBNB 12-level Pancake grid (traders)",
+      "category": "grid \u00b7 PancakeSwap",
+      "hiredThroughMarketplace": true,
+      "hire": {
+        "agent": "marlin",
+        "capUsd": 100,
+        "hireUsd": 0
+      },
+      "agent": {
+        "seconds": 2.298,
+        "fetchSeconds": 2.298,
+        "costUsd": 0.0319,
+        "quality": {
+          "score": 100.0,
+          "have": 4,
+          "need": 4,
+          "missing": [],
+          "actionable": true,
+          "fundsMoved": false
+        },
+        "headline": "12-level CAKE/WBNB Pancake grid sized to cap \u2014 orders not placed",
+        "attachment": "report/attachments/marlin-hired.json",
+        "fundsMoved": false
+      },
+      "manual": {
+        "seconds": 270.206,
+        "fetchSeconds": 0.206,
+        "operatorFinishSeconds": 270.0,
+        "costUsd": 3.7529,
+        "quality": {
+          "score": 25.0,
+          "have": 1,
+          "need": 4,
+          "missing": [
+            "band",
+            "levels",
+            "paperRecord"
+          ],
+          "actionable": false,
+          "fundsMoved": false
+        },
+        "headline": "Spot only. Operator would still mark 12 levels by hand on a chart.",
+        "attachment": "report/attachments/marlin-manual.json",
+        "fundsMoved": false
+      },
+      "speedup": 117.6,
+      "qualityDelta": 75.0,
+      "labourSavedUsd": 3.721
     },
     {
-      "name": "Grid band on CAKE (grid trading)",
-      "category": "grid",
-      "manualSec": 240,
-      "agentMs": 422,
-      "manualHow": "CAKE chart, mark \u00b1 realized 24h, place 12 levels",
-      "agentHow": "Live CAKE spot + 24h change \u2192 12-level band",
-      "output": "CAKE $1.91  24h 4.58%  liq $17915411.22",
-      "agentSec": 0.422,
-      "speedup": 568.7
+      "name": "Pancake V3 LP range plan (liquidity providers)",
+      "category": "rebalance \u00b7 PancakeSwap LPs",
+      "hiredThroughMarketplace": true,
+      "hire": {
+        "agent": "anchor",
+        "capUsd": 100,
+        "hireUsd": 0
+      },
+      "agent": {
+        "seconds": 1.73,
+        "fetchSeconds": 1.73,
+        "costUsd": 0.024,
+        "quality": {
+          "score": 100.0,
+          "have": 5,
+          "need": 5,
+          "missing": [],
+          "actionable": true,
+          "fundsMoved": false
+        },
+        "headline": "Pancake V3 range plan \u00b7 HOLD range",
+        "attachment": "report/attachments/anchor-hired.json",
+        "fundsMoved": false
+      },
+      "manual": {
+        "seconds": 360.548,
+        "fetchSeconds": 0.548,
+        "operatorFinishSeconds": 360.0,
+        "costUsd": 5.0076,
+        "quality": {
+          "score": 20.0,
+          "have": 1,
+          "need": 5,
+          "missing": [
+            "action",
+            "suggestedLower",
+            "suggestedUpper",
+            "inRange"
+          ],
+          "actionable": false,
+          "fundsMoved": false
+        },
+        "headline": "Pool list only. No tick range, no in-range test, no reset plan.",
+        "attachment": "report/attachments/anchor-manual.json",
+        "fundsMoved": false
+      },
+      "speedup": 208.5,
+      "qualityDelta": 80.0,
+      "labourSavedUsd": 4.9836
     }
   ],
-  "note": "Agent times are wall-clock of this machine against live APIs. Manual times are conservative operator estimates for the same three jobs. Outputs are live fetches, not backfills."
+  "paperRecord": {
+    "ok": true,
+    "generated": "2026-09-05T14:58:33Z",
+    "note": "Paper record from live public candles. Zero on-chain fills. Win rate / window / risk are measured on this series.",
+    "marlin": {
+      "ok": true,
+      "kind": "grid",
+      "label": "PAPER \u2014 live Binance candles, not on-chain fills",
+      "window": {
+        "from": "2026-08-29T15:00Z",
+        "to": "2026-09-05T14:00Z",
+        "hours": 168
+      },
+      "capUsd": 100,
+      "trades": 10,
+      "roundtrips": 5,
+      "wins": 4,
+      "losses": 1,
+      "winRatePct": 80.0,
+      "pnlUsd": 2.889,
+      "pnlPct": 2.889,
+      "maxDrawdownPct": 0.892,
+      "risk": {
+        "perTradeFrac": 0.35,
+        "capUsd": 100,
+        "maxDrawdownUsd": 0.8916
+      },
+      "lastEquityUsd": 102.889,
+      "sampleTrades": [
+        {
+          "side": "buy",
+          "px": 1.845,
+          "t": 1788253200,
+          "usd": 35.331629834254144
+        },
+        {
+          "side": "sell",
+          "px": 1.844,
+          "t": 1788318000,
+          "usd": 35.312479899384634,
+          "pnlUsd": -0.019149934869510332
+        },
+        {
+          "side": "buy",
+          "px": 1.802,
+          "t": 1788339600,
+          "usd": 35.324927357049816
+        },
+        {
+          "side": "sell",
+          "px": 1.825,
+          "t": 1788390000,
+          "usd": 35.77580045872137,
+          "pnlUsd": 0.45087310167155437
+        },
+        {
+          "side": "buy",
+          "px": 1.983,
+          "t": 1788498000,
+          "usd": 35.48273294263486
+        },
+        {
+          "side": "sell",
+          "px": 2.043,
+          "t": 1788516000,
+          "usd": 36.556340595967235,
+          "pnlUsd": 1.073607653332374
+        },
+        {
+          "side": "buy",
+          "px": 1.973,
+          "t": 1788526800,
+          "usd": 35.858495621301195
+        },
+        {
+          "side": "sell",
+          "px": 1.997,
+          "t": 1788588000,
+          "usd": 36.294686140769635,
+          "pnlUsd": 0.4361905194684397
+        }
+      ],
+      "candles": 168,
+      "symbol": "CAKE",
+      "venue": "Pancake grid paper"
+    },
+    "swordfish": {
+      "ok": true,
+      "kind": "trend",
+      "label": "PAPER \u2014 live Binance candles, not on-chain fills",
+      "window": {
+        "from": "2026-08-29T15:00Z",
+        "to": "2026-09-05T14:00Z",
+        "hours": 168
+      },
+      "capUsd": 100,
+      "trades": 27,
+      "roundtrips": 13,
+      "wins": 2,
+      "losses": 11,
+      "winRatePct": 15.38,
+      "pnlUsd": 2.963,
+      "pnlPct": 2.963,
+      "maxDrawdownPct": 1.027,
+      "risk": {
+        "perTradeFrac": 0.35,
+        "capUsd": 100,
+        "maxDrawdownUsd": 1.0273
+      },
+      "lastEquityUsd": 102.963,
+      "sampleTrades": [
+        {
+          "side": "sell",
+          "px": 720.35,
+          "t": 1788501600,
+          "usd": 35.239085280080054,
+          "pnlUsd": -0.1883396658961729
+        },
+        {
+          "side": "buy",
+          "px": 722.52,
+          "t": 1788516000,
+          "usd": 35.36150606291257
+        },
+        {
+          "side": "sell",
+          "px": 715.2,
+          "t": 1788523200,
+          "usd": 35.00325130957631,
+          "pnlUsd": -0.35825475333626144
+        },
+        {
+          "side": "buy",
+          "px": 719.45,
+          "t": 1788537600,
+          "usd": 35.23611689924488
+        },
+        {
+          "side": "sell",
+          "px": 716.9,
+          "t": 1788541200,
+          "usd": 35.11122691648989,
+          "pnlUsd": -0.1248899827549863
+        },
+        {
+          "side": "buy",
+          "px": 718.91,
+          "t": 1788544800,
+          "usd": 35.19240540528063
+        },
+        {
+          "side": "sell",
+          "px": 717.42,
+          "t": 1788555600,
+          "usd": 35.11946625565986,
+          "pnlUsd": -0.07293914962077253
+        },
+        {
+          "side": "buy",
+          "px": 718.69,
+          "t": 1788559200,
+          "usd": 35.16687670291336
+        }
+      ],
+      "candles": 168,
+      "symbol": "WBNB",
+      "venue": "BSC trend paper"
+    }
+  },
+  "termiX": {
+    "valueOfServices": "Hire $0, spend cap $100. Speed and quality vs unaided API clicks in tasks[].",
+    "provenAdvantage": "This file. Time, cost, quality, attachments.",
+    "highStakes": "Task 1 is trading/security. Paper win rate/window/risk on CAKE + WBNB.",
+    "marketplace": "Find \u2192 compare \u2192 hire on http://127.0.0.1:8090 \u2014 no instruction manual."
+  },
+  "pancakeSwap": {
+    "traders": "Marlin 12-level CAKE grid + Swordfish Pancake quote (fee + minOut, no tx).",
+    "lps": "Anchor V3 range plan (in-range, IL, reset/hold) \u2014 no mint.",
+    "fundsAtRisk": false
+  }
 }

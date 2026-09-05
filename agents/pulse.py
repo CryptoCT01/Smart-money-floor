@@ -23,7 +23,7 @@ def snapshot(prices: dict, yields: dict, extra: dict | None = None) -> dict[str,
         "status": f"{len(venus)} Venus markets live" if venus else ("protocol TVL live" if tvl else "Venus unavailable"),
         "live": live,
         "accent": "green",
-        "hire": "Watches Venus health factor. Alerts under 1.5. Critical path can repay or add collateral inside a spend cap.",
+        "hire": "Hire $0. Watches Venus BSC utilisation and markets. Does not auto-repay. Alerts only until you act.",
         "why": "Liquidation is a health-factor problem. Pulse surfaces borrow, supply APR and protocol utilization on BSC.",
         "metrics": [
             {"label": "Venus BSC TVL", "value": tvl, "fmt": "usd_short"},

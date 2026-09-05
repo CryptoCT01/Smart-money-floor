@@ -1,4 +1,3 @@
-import os
 #!/usr/bin/env python3
 """Smart Money Floor — BNB Agent Studio marketplace.
 
@@ -7,9 +6,11 @@ Stdlib only. python3 server.py  →  http://127.0.0.1:8090
 from __future__ import annotations
 
 import json
+import os
 import sys
 import threading
 import time
+from urllib.parse import parse_qs, urlparse
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -18,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-from agents import anchor, helmsman, marlin, pulse, reef, swordfish  # noqa: E402
+from agents import anchor, helmsman, jobs, marlin, pulse, reef, swordfish  # noqa: E402
 from execution.swap import execute_swap  # noqa: E402
 import runtime  # noqa: E402
 from signals import (  # noqa: E402
@@ -33,6 +34,8 @@ from signals import (  # noqa: E402
     get_wallet,
     get_yields,
 )
+from signals.pancake_quote import quote as pancake_quote  # noqa: E402
+from signals.paper import get_record  # noqa: E402
 PUBLIC_URL = ""
 
 AGENT_WALLET = (os.environ.get("AGENT_WALLET") or "").strip()  # never hardcode a personal wallet in the public tree
@@ -139,6 +142,8 @@ def pack_floor() -> dict:
         pulse.snapshot(prices, yields, extra),
         helmsman.snapshot(prices, yields, extra),
     ]
+    for a in agents:
+        a["price"] = {"hireUsd": 0, "capUsd": 100, "note": "Hire is free. Spend cap is the only size you can SWAP."}
     elapsed_ms = int((time.time() - t0) * 1000)
     live = sum(1 for a in agents if a.get("live"))
     payload = {
@@ -240,8 +245,6 @@ class Handler(SimpleHTTPRequestHandler):
             self._json({"ok": True, "items": items})
             return
         if path.startswith("/api/chart"):
-            from urllib.parse import parse_qs, urlparse
-
             q = parse_qs(urlparse(self.path).query)
             sym = (q.get("symbol") or ["WBNB"])[0]
             try:
@@ -250,8 +253,6 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": False, "error": str(exc), "points": []}, 500)
             return
         if path in ("/api/wallet", "/api/venus"):
-            from urllib.parse import parse_qs, urlparse
-
             q = parse_qs(urlparse(self.path).query)
             addr = (q.get("address") or [HIRE.get("address") or AGENT_WALLET])[0]
             try:
@@ -284,6 +285,29 @@ class Handler(SimpleHTTPRequestHandler):
             return
         if path == "/api/scanner":
             self._json(get_scanner())
+            return
+        if path == "/api/job":
+            q = parse_qs(urlparse(self.path).query)
+            aid = (q.get("agent") or [HIRE.get("agent") or ""])[0]
+            try:
+                self._json({"ok": True, **jobs.run(aid, dict(HIRE))})
+            except jobs.HireRequired as exc:
+                self._json({"ok": False, "error": str(exc)}, 400)
+            except Exception as exc:  # noqa: BLE001
+                self._json({"ok": False, "error": str(exc)}, 500)
+            return
+        if path == "/api/record":
+            self._json(get_record(float(HIRE.get("capUsd") or 100)))
+            return
+        if path == "/api/quote":
+            q = parse_qs(urlparse(self.path).query)
+            src = (q.get("from") or ["BNB"])[0]
+            dst = (q.get("to") or ["CAKE"])[0]
+            try:
+                amt = float((q.get("amount") or ["0.02"])[0])
+            except (TypeError, ValueError):
+                amt = 0.02
+            self._json(pancake_quote(src=src, dst=dst, amount=amt, prices=get_prices(), security=get_security()))
             return
         if path in ("/report", "/api/report"):
             p = ROOT / "report" / "advantage.html"

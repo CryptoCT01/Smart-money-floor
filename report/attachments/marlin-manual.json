@@ -1,0 +1,14 @@
+{
+  "mode": "manual",
+  "pages": [
+    "DexScreener CAKE",
+    "Pancake farms CAKE price"
+  ],
+  "errors": [],
+  "spot": 2.23,
+  "change24h": 15.03,
+  "levels": null,
+  "band": null,
+  "paperRecord": null,
+  "note": "Spot only. Operator would still mark 12 levels by hand on a chart."
+}

@@ -21,7 +21,7 @@ def snapshot(prices: dict, yields: dict, extra: dict | None = None) -> dict[str,
         "status": "watching BSC majors" if live else "signal error",
         "live": live,
         "accent": "gold",
-        "hire": "Route a BSC swap through PancakeSwap when the 15-signal stack agrees. Spend cap set at hire.",
+        "hire": "Hire $0 · cap set here. GoPlus-gated BSC tape + Pancake quote. Funds never move on hire. SWAP is an extra capped click.",
         "why": "Real-time pair liquidity, 24h flow, and a honeypot/tax screen before size is committed.",
         "metrics": [
             {"label": "WBNB", "value": wbnb.get("priceUsd"), "fmt": "usd"},

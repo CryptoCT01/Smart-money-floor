@@ -1,0 +1,39 @@
+{
+  "agent": "anchor",
+  "category": "rebalancing \u00b7 PancakeSwap LPs",
+  "hired": true,
+  "price": {
+    "hireUsd": 0,
+    "capUsd": 100.0
+  },
+  "headline": "Pancake V3 range plan \u00b7 HOLD range",
+  "output": {
+    "action": "HOLD range",
+    "pair": "CAKE/WBNB",
+    "spot": 2.22,
+    "suggestedLower": 1.9536000000000002,
+    "suggestedUpper": 2.4864000000000006,
+    "widthPct": 24.0,
+    "inRange": true,
+    "topPool": {
+      "symbol": "CAKE-WBNB",
+      "apy": 5.88262,
+      "tvlUsd": 10482648.0,
+      "ilRisk": "yes"
+    },
+    "minted": false,
+    "note": "LP plan only. No V3 mint. Funds stay in the wallet."
+  },
+  "quality": {
+    "fields": [
+      "action",
+      "suggestedLower",
+      "suggestedUpper",
+      "inRange",
+      "topPool"
+    ],
+    "actionable": true,
+    "safetyGate": true,
+    "fundsMoved": false
+  }
+}

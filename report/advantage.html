@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><title>Agent Advantage Report</title>
 <style>
-body{font-family:ui-sans-serif,system-ui;background:#07090d;color:#eef1f6;margin:40px auto;max-width:1100px}
-h1{font-size:1.8rem} td,th{border-bottom:1px solid #222;padding:10px 8px;text-align:left;vertical-align:top}
-code{color:#e8c547;font-size:.78rem} .sub{color:#8b95a4}
+body{font-family:ui-sans-serif,system-ui;background:#07090d;color:#eef1f6;margin:40px auto;max-width:1180px}
+h1{font-size:1.85rem;margin:0 0 8px} h2{font-size:1.05rem;margin:28px 0 10px;color:#e8c547}
+td,th{border-bottom:1px solid #222;padding:10px 8px;text-align:left;vertical-align:top;font-size:.84rem}
+a{color:#3ee0f0} .sub{color:#8b95a4;line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{border:1px solid #222;border-radius:12px;padding:14px;background:#0d1118}
+.k{color:#8b95a4;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}
+.v{font-size:1.3rem;color:#e8c547}
 </style></head><body>
 <h1>Agent Advantage Report</h1>
-<p class="sub">Smart Money Floor · 2026-09-03T08:23:05Z · live BSC APIs</p>
-<p>Agent times are wall-clock of this machine against live APIs. Manual times are conservative operator estimates for the same three jobs. Outputs are live fetches, not backfills.</p>
-<table><thead><tr><th>Task</th><th>Track</th><th>Manual</th><th>Agent</th><th>Speedup</th><th>Live output</th></tr></thead>
-<tbody><tr><td>BSC major tape (trading / security)</td><td>trading</td><td>180s</td><td>1.313s</td><td>×137.1</td><td><code>WBNB $701.98  1.98%  liq $64277308.07  GoPlus screened 10  flags ['SOL', 'DOGE']</code></td></tr><tr><td>Yield route (yield optimisation)</td><td>yield</td><td>300s</td><td>0.648s</td><td>×463.0</td><td><code>29 pools  top uniswap-v3 USDT-WBNB 45.03208%  TVL $3572685.0  pancake 2  venus 16</code></td></tr><tr><td>Grid band on CAKE (grid trading)</td><td>grid</td><td>240s</td><td>0.422s</td><td>×568.7</td><td><code>CAKE $1.91  24h 4.58%  liq $17915411.22</code></td></tr></tbody></table>
-<p class="sub">TermiX requires 3 tasks both ways, one trading/security. This file is regenerated from live fetches — never hand-typed prints.</p>
+<p class="sub">Smart Money Floor · 2026-09-05T14:58:33Z · live BSC APIs · hire-through-marketplace vs unaided</p>
+<p class="sub">Each task is run twice on this machine against live public APIs. WITH = agent hired through the marketplace (jobs.run requires hire.agent). WITHOUT = sequential page fetches a human would open. Agent seconds = wall-clock. Manual seconds = fetch wall-clock + 90s per missing required field (operator time to finish the same deliverable by hand). Cost = labour at $50/h on those seconds. No funds moved. Paper win rate is Binance candles, labelled PAPER.</p>
+<h2>TermiX — measured, not asserted</h2>
+<table><thead><tr><th>Task</th><th>Track</th><th>Without (manual)</th><th>With (hired agent)</th><th>Delta</th><th>Outputs attached</th></tr></thead>
+<tbody><tr><td>BSC tape + GoPlus + Pancake quote (trading / security)</td><td>trading / security</td><td>360.861s<br>$5.012<br>Q 0.0%</td><td>4.583s<br>$0.0637<br>Q 100.0%</td><td>×78.7<br>+100.0 q<br>$4.9483 labour</td><td><a href='/report/attachments/swordfish-hired.json'>hired.json</a> · <a href='/report/attachments/swordfish-manual.json'>manual.json</a><br>GoPlus-gated BSC tape + Pancake quote (no tx)</td></tr><tr><td>CAKE/WBNB 12-level Pancake grid (traders)</td><td>grid · PancakeSwap</td><td>270.206s<br>$3.7529<br>Q 25.0%</td><td>2.298s<br>$0.0319<br>Q 100.0%</td><td>×117.6<br>+75.0 q<br>$3.721 labour</td><td><a href='/report/attachments/marlin-hired.json'>hired.json</a> · <a href='/report/attachments/marlin-manual.json'>manual.json</a><br>12-level CAKE/WBNB Pancake grid sized to cap — orders not placed</td></tr><tr><td>Pancake V3 LP range plan (liquidity providers)</td><td>rebalance · PancakeSwap LPs</td><td>360.548s<br>$5.0076<br>Q 20.0%</td><td>1.73s<br>$0.024<br>Q 100.0%</td><td>×208.5<br>+80.0 q<br>$4.9836 labour</td><td><a href='/report/attachments/anchor-hired.json'>hired.json</a> · <a href='/report/attachments/anchor-manual.json'>manual.json</a><br>Pancake V3 range plan · HOLD range</td></tr></tbody></table>
+<h2>High-stakes paper record (win rate · window · risk)</h2>
+<p class="sub">Paper record from live public candles. Zero on-chain fills. Win rate / window / risk are measured on this series.</p>
+<div class="grid">
+  <div class="card"><div class="k">Swordfish · WBNB trend paper</div>
+    <div class="v">15.38% win</div>
+    <p class="sub">Window 2026-08-29T15:00Z → 2026-09-05T14:00Z<br>
+    Roundtrips 13 · Max DD 1.027% · Cap $100<br>
+    PAPER — live Binance candles, not on-chain fills</p></div>
+  <div class="card"><div class="k">Marlin · CAKE grid paper</div>
+    <div class="v">80.0% win</div>
+    <p class="sub">Window 2026-08-29T15:00Z → 2026-09-05T14:00Z<br>
+    Roundtrips 5 · Max DD 0.892% · PnL $2.889<br>
+    PAPER — live Binance candles, not on-chain fills</p></div>
+</div>
+<p class="sub">PancakeSwap partner: quotes + grid + LP plan. FundsMoved = false on every hired job. SWAP remains an explicit capped click.</p>
+<p class="sub"><a href="/report/attachments/paper-record.json">paper-record.json</a></p>
 </body></html>

@@ -26,7 +26,7 @@ def snapshot(prices: dict, yields: dict, extra: dict | None = None) -> dict[str,
         "status": f"{grids}-level grid armed" if live else "signal error",
         "live": live,
         "accent": "cyan",
-        "hire": "Places staggered bids below spot and asks above it on PancakeSwap. Inventory stays in the pair.",
+        "hire": "Hire $0 · cap sizes a 12-level CAKE/WBNB Pancake grid. Levels are published, not placed. No on-chain orders until you SWAP.",
         "why": "Grid width tracks CAKE’s own 24h realized move — not a fake ±4% sticker.",
         "metrics": [
             {"label": "CAKE", "value": px or None, "fmt": "usd"},

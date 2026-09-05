@@ -1522,6 +1522,7 @@ function helmsmanCard(raw){
   return '<div class="st-crest"><div><div class="name">'+esc(a.name)+'</div><div class="cat">Floor Captain</div></div>'+
     '<div class="st-crest-r"><span class="pill '+pill+'">'+pillTxt+'</span>'+infoBtn("helmsman")+'</div></div>'+
     '<div class="why" style="font-size:.58rem;line-height:1.3">'+primary+'</div>'+
+    '<div class="detail-line">Hire $0 · cap $100 · work product on hire</div>'+
     profileBars(a)+
     sessionPanel(a)+
     '<div class="metrics">'+metricCells(a,6)+'</div>'+
@@ -1541,6 +1542,7 @@ function stationCard(raw){
   return '<div class="st-crest"><div><div class="name">'+esc(a.name)+'</div><div class="cat">'+esc(a.category||'')+'</div></div>'+
     '<div class="st-crest-r"><span class="pill '+pill+'">'+pillTxt+'</span>'+infoBtn(a.id)+'</div></div>'+
     coinRow(a.id)+
+    '<div class="detail-line">Hire $0 · cap $100 · Pancake plan, no funds moved</div>'+
     profileBars(a)+
     sessionPanel(a)+
     '<div class="metrics">'+metricCells(a,6)+'</div>'+
@@ -1563,6 +1565,7 @@ function swordfishBlade(raw){
     '<div class="st-crest-r"><span class="pill '+pill+'">'+pillTxt+'</span>'+infoBtn("swordfish")+'</div></div>'+
     '<span class="risk-chip '+risk.cls+'" title="Live GoPlus for selected coin">'+esc(risk.txt)+'</span>'+
     coinRow(a.id)+
+    '<div class="detail-line">Hire $0 · GoPlus + Pancake quote · paper record on /api/record</div>'+
     profileBars(a)+
     sessionPanel(a)+
     '<div class="metrics">'+metricCells(a,6)+'</div>'+
@@ -1785,8 +1788,16 @@ function paintDossier(id){
     (id==="helmsman"&&a.brief&&a.brief.actions&&a.brief.actions.length?('<div class="detail-line" style="white-space:pre-wrap">'+a.brief.actions.map(x=>"• "+esc(x)).join("<br>")+'</div>'):'')+
     '<div class="metrics full">'+metricCells(a,6)+'</div>'+
     '<div class="detail-line">'+esc(a.detail||'')+esc(sync)+(a.source?(' · '+esc(a.source)):'')+'</div>'+
-    '<div class="st-actions" style="max-width:360px">'+ctaBtn(a, hs.hired)+'</div>';
+    '<div class="st-actions" style="max-width:360px">'+ctaBtn(a, hs.hired)+'</div>'+
+    '<div class="detail-line" id="jobBox">Hire to attach the live work product (time/cost/quality live in /report).</div>';
   bindActions($("dossierBody"));
+  if(hs.hired){
+    fetch("/api/job?agent="+encodeURIComponent(id)).then(r=>r.json()).then(j=>{
+      const box=$("jobBox"); if(!box) return;
+      if(!j.ok){ box.textContent=j.error||"job blocked"; return; }
+      box.innerHTML='<b style="color:var(--gold)">Hired work</b> · '+esc(j.headline||"")+' · funds moved: no';
+    }).catch(()=>{});
+  }
 }
 function openExp(kind, dossierId){
   EXP=kind;
@@ -2250,10 +2261,14 @@ $("hireGo").onclick=async ()=>{
   if(res.ok){
     if(res.hire&&res.hire.address) ADDR=res.hire.address;
     if(LAST){ LAST.hire=res.hire; LAST.runtime=res.runtime||LAST.runtime; }
-    toast((HIRE?HIRE.name:"Agent")+" running");
+    toast((HIRE?HIRE.name:"Agent")+" running — work product attached");
     paintConsole(true);
     loadBound();
     refresh();
+    fetch("/api/job?agent="+encodeURIComponent((HIRE&&HIRE.id)||"")).then(r=>r.json()).then(j=>{
+      if(j.ok) toast(j.headline||"job ready");
+      else toast(j.error||"hire job");
+    }).catch(()=>{});
   } else toast(res.error||"hire failed");
 };
 fillSelects(); updateQuote();

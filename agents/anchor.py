@@ -20,7 +20,7 @@ def snapshot(prices: dict, yields: dict, extra: dict | None = None) -> dict[str,
         "status": "watching concentrated ranges" if live else "yields unavailable",
         "live": live,
         "accent": "purple",
-        "hire": "When price leaves the LP tick range, remove liquidity and re-mint a new range around spot.",
+        "hire": "Hire $0. Publishes a Pancake V3 range plan (in-range, IL, reset/hold). Does not mint. LP funds stay in your wallet.",
         "why": "Fees drop to zero out of range. Anchor watches APR, TVL and IL so you rebalance on data, not vibes.",
         "metrics": [
             {"label": "Top APR", "value": (top or {}).get("apy"), "fmt": "pct"},

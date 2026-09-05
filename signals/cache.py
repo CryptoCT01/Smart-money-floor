@@ -21,3 +21,8 @@ def get_or_set(key: str, ttl_s: float, loader: Callable[[], T]) -> T:
     with _lock:
         _store[key] = (time.time(), value)
     return value
+
+
+def clear() -> None:
+    with _lock:
+        _store.clear()

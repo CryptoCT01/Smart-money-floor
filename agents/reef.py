@@ -42,7 +42,7 @@ def snapshot(prices: dict, yields: dict, extra: dict | None = None) -> dict[str,
         "status": f"routing {pick.get('project')}" if pick else "yields unavailable",
         "live": live,
         "accent": "orange",
-        "hire": "Ranks live BSC pools (TVL ≥ $1M, APR cap 400%) and holds the top name until a better pool beats it.",
+        "hire": "Hire $0. Ranks live BSC yields with Pancake in the mix. Does not deposit. You keep the funds.",
         "why": "Yield is a main-track category. Reef decides with live APR + TVL, not a brochure rate.",
         "metrics": [
             {"label": "Best APR", "value": (pick or {}).get("apy"), "fmt": "pct"},

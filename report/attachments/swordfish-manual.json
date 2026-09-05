@@ -1,0 +1,17 @@
+{
+  "mode": "manual",
+  "pages": [
+    "DexScreener WBNB",
+    "DexScreener CAKE",
+    "GoPlus WBNB",
+    "GoPlus CAKE"
+  ],
+  "errors": [],
+  "wbnbUsd": "769.28",
+  "goplusRaw": false,
+  "pancakeQuote": null,
+  "paperRecord": null,
+  "levels": null,
+  "synthesis": false,
+  "note": "Raw page payloads. No grid, no quote, no hire, no quality gate."
+}
