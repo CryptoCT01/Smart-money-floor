@@ -1,3 +1,4 @@
+import os
 #!/usr/bin/env python3
 """Smart Money Floor — BNB Agent Studio marketplace.
 
@@ -34,7 +35,7 @@ from signals import (  # noqa: E402
 )
 PUBLIC_URL = ""
 
-AGENT_WALLET = "0xC41828401DABEE1B7Ceaa0E4410601020dB39774"
+AGENT_WALLET = (os.environ.get("AGENT_WALLET") or "").strip()  # never hardcode a personal wallet in the public tree
 HIRE_LOCK = threading.Lock()
 HIRE: dict = {
     "address": "",

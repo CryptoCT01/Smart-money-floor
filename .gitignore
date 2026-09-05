@@ -23,3 +23,9 @@ __pycache__/
 .venv/
 venv/
 logs/
+
+# local identity / tunnels
+public_url.txt
+**/Smart Money Floor — HANDOVER.md
+.local/
+*.log

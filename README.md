@@ -1,36 +1,45 @@
 # Smart Money Floor
 
-BNB Agent Studio marketplace for **The Smart Money Era**.
+Live **BNB Chain** agent marketplace for [The Smart Money Era](https://www.bnbchain.org/en/hackathons/smart-money-era) hackathon.
 
-Four equally-deep categories, live BSC data:
+Find → understand → hire BSC specialists from **live** public APIs only. No mock prices, fake fills, or invented PnL.
 
-| Agent | Category | Live data |
-|---|---|---|
-| Swordfish | Trading | DexScreener + GoPlus |
-| Marlin | Grid Trading | CAKE band from realized 24h + Pancake TVL |
-| Anchor | Rebalancing | PancakeSwap yields, IL, forecast |
-| Pulse | Health Factor | Venus markets + protocol TVL/borrow |
+## Agents
 
-Also on the floor: **8004scan** agent directory, DeFiLlama yield table, GoPlus security.
+| Agent | Role |
+|---|---|
+| Helmsman | Floor captain — live hire recommendations |
+| Swordfish | TermiX-style trading signals + gated swap |
+| Marlin | Grid trading |
+| Anchor | Rebalancing |
+| Reef | Yield optimisation |
+| Pulse | Health factor / Venus |
 
-## Run
+## Quick start
 
 ```bash
-cd ~/Desktop/bnb-agent
-python3 server.py
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+env -u PYTHONPATH python3 server.py
 ```
 
 Open http://127.0.0.1:8090
 
-No API keys. Public: DexScreener, DeFiLlama, 8004scan, GoPlus, PancakeSwap farms-api.
+### Optional env
 
-## Layout
+| Variable | Purpose |
+|---|---|
+| `AGENT_WALLET` | Optional read-only demo address for balance/Venus views |
+| `TWAK_ACCESS_ID` / `TWAK_HMAC_SECRET` | Required only for live SWAP (never commit these) |
 
-```
-agents/        swordfish · marlin · anchor · pulse
-signals/       prices, yields, charts, 8004scan, goplus, protocols
-marketplace/   dashboard.html
-server.py      stdlib HTTP on :8090
-```
+Credentials are read from the environment or local `~/.twak/config.json` at runtime. They are **never** logged or shipped in this repo.
 
-Do not modify `trading-floor/` or `humming-bot/`. Those are read-only references.
+## Safety
+
+- Live data only from public endpoints (DexScreener, DeFiLlama, GoPlus, 8004scan, …)
+- Hired agents run **watch loops** unless you explicitly SWAP under cap (Swordfish/Marlin)
+- Do not commit `.env`, wallets, or API keys
+
+## License
+
+Hackathon demo — use at your own risk.
