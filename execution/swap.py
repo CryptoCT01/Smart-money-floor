@@ -10,8 +10,17 @@ from typing import Any
 TWAK = Path.home() / ".hermes" / "node" / "bin" / "twak"
 CFG = Path.home() / ".twak" / "config.json"
 NATIVE = {"BNB", "WBNB", "USDT", "USDC", "CAKE", "ETH", "BTCB"}
+# Public BSC contracts — not secrets. TWAK often wants 0x for non-native symbols.
+BSC_ADDR = {
+    "CAKE": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+    "USDT": "0x55d398326f99059fF775485246999027B3197955",
+    "USDC": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "ETH": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+    "BTCB": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+}
 GAS_RESERVE_BNB = 0.002
 MAX_USD_HARD = 100.0
+# Keep gas: do not spend the last 0.002 BNB. Tiny proof swaps are allowed above this.
 
 
 def _creds() -> dict[str, str]:
@@ -57,8 +66,10 @@ def execute_swap(*, src: str, dst: str, amount: float, cap_usd: float, px_src: f
     env = os.environ.copy()
     env["TWAK_ACCESS_ID"] = creds["TWAK_ACCESS_ID"]
     env["TWAK_HMAC_SECRET"] = creds["TWAK_HMAC_SECRET"]
+    src_arg = "BNB" if src in ("BNB", "WBNB") else BSC_ADDR.get(src, src)
+    dst_arg = "BNB" if dst in ("BNB", "WBNB") else BSC_ADDR.get(dst, dst)
     cmd = [
-        str(TWAK), "swap", str(amount), src, dst,
+        str(TWAK), "swap", str(amount), src_arg, dst_arg,
         "--chain", "bsc", "--slippage", "5",
     ]
     try:

@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "label": "Live on-chain proof — not paper",
+  "chain": "bsc",
+  "wallet": "0xC41828401DABEE1B7Ceaa0E4410601020dB39774",
+  "swap": {
+    "from": "0.009 BUSD",
+    "to": "0.004020263851774015 CAKE",
+    "hash": "0xb7650e4d28a7da2871092981a3a00c73211c8ccca0d9531cacf1b7d9d83ade4b",
+    "explorer": "https://bscscan.com/tx/0xb7650e4d28a7da2871092981a3a00c73211c8ccca0d9531cacf1b7d9d83ade4b",
+    "block": 120138084,
+    "status": "success",
+    "timestamp": "2026-09-05T15:54:39Z",
+    "note": "BNB left as gas (~0.0016). Routed via 0x; CAKE out is PancakeSwap token."
+  },
+  "approval": {
+    "hash": "0x2c668daa757be66f7338028f36e779cbd2fe2bf671804ee6b2de786a8550a43b",
+    "explorer": "https://bscscan.com/tx/0x2c668daa757be66f7338028f36e779cbd2fe2bf671804ee6b2de786a8550a43b"
+  }
+}

@@ -25,11 +25,26 @@ env -u PYTHONPATH python3 report/generate.py
 
 Open `/report` on the floor. Each of 3 tasks is run **both ways**: agent **hired through the marketplace** vs sequential unaided API clicks. Every task records **time, labour cost ($50/h wall-clock), output quality, and attached JSON**. Task 1 is trading/security. Paper win rate / window / risk from live Binance candles (labelled PAPER — not on-chain fills).
 
+![Agent Advantage Report](report/advantage.png)
+
 ## PancakeSwap partner
 
-- Traders: Marlin grid + Swordfish Pancake V2 fee quote (`/api/quote`) — **executed: false**
+- Traders: Marlin grid + Swordfish Pancake V2 fee quote (`/api/quote`) — **executed: false** until you SWAP
 - LPs: Anchor range plan — **minted: false**
 - User funds are not touched on hire
+
+### On-chain proof (5 Sep 2026)
+
+Tiny live swap on the agent wallet — BNB kept for gas.
+
+| | |
+|---|---|
+| Wallet | `0xC41828401DABEE1B7Ceaa0E4410601020dB39774` |
+| Swap | 0.009 BUSD → 0.00402 CAKE |
+| Tx | [0xb7650e4d…ade4b](https://bscscan.com/tx/0xb7650e4d28a7da2871092981a3a00c73211c8ccca0d9531cacf1b7d9d83ade4b) |
+| Status | Success · block 120138084 |
+
+JSON: [`report/proof.json`](report/proof.json)
 
 ## Quick start
 
