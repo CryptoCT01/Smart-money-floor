@@ -29,6 +29,12 @@ Open `/report` on the floor. Each of 3 tasks is run **both ways**: agent **hired
 
 **60s demo:** [report/Smart-Money-Floor-60s.mp4](report/Smart-Money-Floor-60s.mp4) (58s · 1440×900)
 
+**Edited demo:** [report/Smart-Money-Floor-demo-edit.mp4](report/Smart-Money-Floor-demo-edit.mp4)
+
+## Social
+
+Announcement: [x.com/CryptoCT01/status/2097047390171562262](https://x.com/CryptoCT01/status/2097047390171562262)
+
 ## PancakeSwap partner
 
 - Traders: Marlin grid + Swordfish Pancake V2 fee quote (`/api/quote`) — **executed: false** until you SWAP
