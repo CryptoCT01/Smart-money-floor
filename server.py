@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT))
 
 from agents import anchor, helmsman, jobs, marlin, pulse, reef, swordfish  # noqa: E402
 from execution.swap import execute_swap  # noqa: E402
+from execution import altana_keystore  # noqa: E402
 import runtime  # noqa: E402
 from signals import (  # noqa: E402
     get_altana,
@@ -44,6 +45,7 @@ HIRE: dict = {
     "address": "",
     "agent": None,
     "capUsd": 0.0,
+    "depositUsd": 0.0,
     "duration": None,
     "hiredAt": None,
 }
@@ -280,8 +282,33 @@ class Handler(SimpleHTTPRequestHandler):
         if path == "/api/runtime":
             self._json({"ok": True, **runtime.snapshot()})
             return
+        if path == "/api/altana/status":
+            try:
+                # ensure_wallet creates on first call; otherwise refreshes balance via status.mjs
+                ensured = altana_keystore.ensure_wallet()
+                st = altana_keystore.public_status()
+                if ensured.get("ok") is False and ensured.get("error"):
+                    st["refreshError"] = ensured.get("error")
+                else:
+                    st["refreshed"] = True
+                # surface awaiting-fund honestly
+                if st.get("waitForFund") or st.get("waitForFaucet"):
+                    st["fundHint"] = st.get("fundHint") or "Send BNB to address"
+                    st["waitForFund"] = True
+                    st["waitForFaucet"] = True  # legacy alias
+                self._json(st)
+            except Exception as exc:  # noqa: BLE001
+                self._json({"ok": False, "error": str(exc)}, 500)
+            return
         if path == "/api/altana":
-            self._json(get_altana())
+            skills = get_altana()
+            try:
+                ks = altana_keystore.public_status()
+            except Exception as exc:  # noqa: BLE001
+                ks = {"ok": False, "error": str(exc)}
+            out = dict(skills)
+            out["keystore"] = ks
+            self._json(out)
             return
         if path == "/api/scanner":
             self._json(get_scanner())
@@ -345,7 +372,11 @@ class Handler(SimpleHTTPRequestHandler):
             addr = str(body.get("address") or "").strip()
             agent = str(body.get("agent") or "").strip()
             try:
-                cap = float(body.get("capUsd") or 0)
+                # Deposit wires into spend cap (UI sends both; prefer depositUsd)
+                raw_dep = body.get("depositUsd")
+                if raw_dep is None:
+                    raw_dep = body.get("capUsd") or 0
+                cap = float(raw_dep or 0)
             except (TypeError, ValueError):
                 cap = 0
             cap = max(0.0, min(cap, 100.0))
@@ -353,10 +384,11 @@ class Handler(SimpleHTTPRequestHandler):
                 if addr.startswith("0x") and len(addr) == 42:
                     HIRE["address"] = addr
                 HIRE["agent"] = agent or HIRE.get("agent")
+                HIRE["depositUsd"] = cap
                 HIRE["capUsd"] = cap
                 HIRE["duration"] = body.get("duration") or "24 hours"
                 HIRE["hiredAt"] = utc_now()
-            push_feed(f"hired {HIRE.get('agent')} · cap ${cap:.0f} · {(HIRE.get('address') or '')[:8]}…", "ok")
+            push_feed(f"hired {HIRE.get('agent')} · deposit/cap ${cap:.0f} · {(HIRE.get('address') or '')[:8]}…", "ok")
             runtime.mark_hire(HIRE.get("agent"), True)
             self._json({"ok": True, "hire": dict(HIRE), "runtime": runtime.snapshot()})
             return
@@ -365,6 +397,7 @@ class Handler(SimpleHTTPRequestHandler):
                 old = HIRE.get("agent")
                 HIRE["agent"] = None
                 HIRE["capUsd"] = 0.0
+                HIRE["depositUsd"] = 0.0
                 HIRE["duration"] = None
                 HIRE["hiredAt"] = None
             if old:
@@ -381,6 +414,43 @@ class Handler(SimpleHTTPRequestHandler):
                 HIRE["address"] = addr
             push_feed(f"wallet bound {addr[:8]}…{addr[-4:]}", "ok")
             self._json({"ok": True, "hire": dict(HIRE)})
+            return
+        if path == "/api/altana/grant":
+            try:
+                ensure = altana_keystore.ensure_wallet()
+                if ensure.get("waitForFund") or ensure.get("waitForFaucet"):
+                    self._json({**ensure, "ok": False, "step": "grant"}, 402)
+                    return
+                result = altana_keystore.grant()
+                code = 200 if result.get("ok") else (402 if (result.get("waitForFund") or result.get("waitForFaucet")) else 400)
+                if result.get("ok"):
+                    push_feed("Altana session granted · Keystore registered", "ok")
+                elif result.get("waitForFund") or result.get("waitForFaucet"):
+                    addr = result.get("walletAddress") or ""
+                    push_feed("Altana awaiting fund · " + ((addr[:8] + "…") if addr else "no addr"), "warn")
+                self._json(result, code)
+            except Exception as exc:  # noqa: BLE001
+                self._json({"ok": False, "error": str(exc)}, 500)
+            return
+        if path == "/api/altana/revoke":
+            try:
+                result = altana_keystore.revoke()
+                if result.get("ok"):
+                    push_feed("Altana session revoked", "warn")
+                self._json(result, 200 if result.get("ok") else 400)
+            except Exception as exc:  # noqa: BLE001
+                self._json({"ok": False, "error": str(exc)}, 500)
+            return
+        if path == "/api/altana/execute":
+            try:
+                result = altana_keystore.execute_demo()
+                code = 200 if result.get("ok") else (402 if (result.get("waitForFund") or result.get("waitForFaucet")) else 400)
+                if result.get("ok"):
+                    ex = ((result.get("lastTx") or {}).get("explorer")) or ""
+                    push_feed("Altana session tx " + (ex[:48] or "submitted"), "ok")
+                self._json(result, code)
+            except Exception as exc:  # noqa: BLE001
+                self._json({"ok": False, "error": str(exc)}, 500)
             return
         if path == "/api/swap":
             src = str(body.get("from") or "")

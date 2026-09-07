@@ -30,3 +30,16 @@ public_url.txt
 .local/
 *.log
 .gh_push_token
+_demo/
+.env.altana
+.env
+
+# Altana local wallet/session state (never commit)
+.altana-state.json
+.altana-session.json
+.altana-session.key
+scripts/altana/node_modules/
+scripts/altana/package-lock.json
+
+.altana-state.testnet.json
+Smart-Money-Floor-60s.mp4

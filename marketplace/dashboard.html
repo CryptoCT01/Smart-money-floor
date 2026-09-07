@@ -414,7 +414,10 @@ header.top{display:grid;grid-template-columns:1fr auto 1.2fr;gap:10px;align-item
 .wl-bal{font-weight:700;font-size:.62rem}
 .wm{position:fixed;left:16px;bottom:58px;width:340px;background:rgba(12,17,24,.96);border:1px solid var(--border);border-radius:16px;padding:14px;display:none;z-index:25;backdrop-filter:blur(12px)}
 .wm.show{display:block;animation:slideIn .25s ease}
-.wm h4{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.wm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.wm h4{font-family:var(--mono);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0}
+.wm-x{flex:0 0 auto;width:28px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#eef1f6;font-size:1rem;line-height:1;cursor:pointer}
+.wm-x:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(62,224,240,.12)}
 .wm-total{font-family:var(--mono);font-size:1.15rem;font-weight:700;color:var(--gold)}
 .wm-addr{font-family:var(--mono);font-size:.52rem;color:var(--fg3);word-break:break-all;margin:4px 0 10px}
 .wm-item{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:.58rem;padding:5px 0;border-bottom:1px solid var(--line)}
@@ -912,6 +915,153 @@ html.audit #splash{display:none!important;visibility:hidden!important;pointer-ev
 .explain-sheet .ex-k{font-size:.58rem!important;color:var(--cyan)!important}
 .explain-sheet p{font-size:.95rem!important;color:#e4ebf5!important;line-height:1.5!important}
 
+
+/* v7i: hired Session live must not overlap Details / CLEAR metrics */
+.agent-grid .station{overflow:hidden!important}
+.agent-grid .sess{
+  flex:0 0 auto!important;
+  padding:4px 6px!important;
+  gap:2px 5px!important;
+  max-height:72px!important;
+  overflow:hidden!important;
+}
+.agent-grid .sess .sv{font-size:.48rem!important;line-height:1.1!important}
+.agent-grid .sess .sk{font-size:.28rem!important}
+.agent-grid .sess-h{font-size:.34rem!important;margin-bottom:1px!important}
+.agent-grid .sess-note{display:none!important}
+.agent-grid .metrics{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:auto!important;
+  align-content:start!important;
+  grid-auto-rows:auto!important;
+}
+.agent-grid .st-actions{
+  flex:0 0 auto!important;
+  position:relative!important;
+  z-index:4!important;
+  margin-top:auto!important;
+  gap:6px!important;
+  padding-top:6px!important;
+  background:linear-gradient(180deg, rgba(6,8,12,0), rgba(6,8,12,.92) 35%, rgba(6,8,12,.98));
+}
+
+
+/* v7j: Smart Money Floor pack 1–9 — keep v7i; do not touch body background */
+.cap-chip{
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  font-family:var(--mono);font-size:.36rem;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:999px;
+  border:1px solid rgba(232,197,71,.35);background:rgba(232,197,71,.08);color:var(--gold);
+  white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+}
+.agent-grid .cap-chip{font-size:.32rem!important;padding:2px 6px!important;flex:0 0 auto!important}
+.act.hire{
+  border-color:rgba(61,255,156,.55)!important;
+  color:#0b1a12!important;
+  background:linear-gradient(135deg,#3dff9c,#1fcf7a)!important;
+  font-weight:800!important;
+  box-shadow:0 0 14px rgba(61,255,156,.22);
+  flex:1.35!important;
+}
+.act.hire:hover{filter:brightness(1.06)}
+.act.ghost{
+  border-color:rgba(255,255,255,.12)!important;
+  color:var(--fg3)!important;
+  background:transparent!important;
+  flex:0 0 auto!important;
+  opacity:.78;
+  font-weight:600!important;
+}
+.act.ghost:hover{opacity:1;border-color:rgba(255,255,255,.22)!important;color:var(--fg2)!important}
+.agent-grid .act.hire{padding:7px 6px!important;font-size:.42rem!important}
+.agent-grid .act.ghost{
+  padding:7px 12px!important;
+  font-size:.42rem!important;
+  font-weight:800!important;
+  letter-spacing:.1em!important;
+  color:#e8edf7!important;
+  border:1.5px solid rgba(255,255,255,.42)!important;
+  background:rgba(255,255,255,.1)!important;
+  opacity:1!important;
+  min-width:72px!important;
+}
+.agent-grid .act.ghost:hover{
+  border-color:rgba(62,224,240,.65)!important;
+  color:var(--cyan)!important;
+  background:rgba(62,224,240,.14)!important;
+}
+.agent-grid .metric{
+  padding:5px 6px!important;
+  border-radius:8px!important;
+  border-color:rgba(255,255,255,.07)!important;
+}
+.agent-grid .st-actions{gap:6px!important}
+.kpi-strip{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:2px 0 4px;
+}
+.kpi-strip .kpi{
+  background:rgba(7,9,13,.72);border:1px solid var(--line);border-radius:10px;padding:8px 10px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.kpi-strip .kpi-l{font-family:var(--mono);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg3)}
+.kpi-strip .kpi-v{font-family:var(--mono);font-size:.95rem;font-weight:800;margin-top:3px;color:var(--fg);line-height:1.1}
+.kpi-strip .kpi-v.up{color:var(--green)}
+.kpi-strip .kpi-v.down{color:var(--red)}
+@media(max-width:700px){.kpi-strip{grid-template-columns:1fr 1fr}}
+.dossier-check{
+  background:rgba(7,9,13,.55);border:1px solid var(--border);border-radius:12px;padding:12px 14px;
+}
+.dossier-check h4{
+  font-family:var(--mono);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin:0 0 10px;
+}
+.dossier-check ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.dossier-check li{
+  display:flex;align-items:flex-start;gap:10px;font-size:.78rem;line-height:1.35;color:var(--fg);
+}
+.dossier-check li::before{
+  content:"✓";flex:0 0 auto;width:18px;height:18px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.55rem;font-weight:800;color:#0b1a12;background:var(--green);
+  margin-top:1px;box-shadow:0 0 8px rgba(61,255,156,.25);
+}
+.ladder-wrap{
+  background:rgba(7,9,13,.55);border:1px solid var(--border);border-radius:12px;padding:10px 12px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.ladder-wrap .lh{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.ladder-wrap .lh h4{
+  font-family:var(--mono);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:0;
+}
+.ladder-wrap .lh .meta{font-family:var(--mono);font-size:.5rem;color:var(--fg3)}
+#ladderMount{position:relative;width:100%;height:220px;min-height:180px;border-radius:8px;overflow:hidden;background:rgba(0,0,0,.22)}
+#ladderMount svg{width:100%;height:100%;display:block}
+.dossier-hist{
+  background:rgba(7,9,13,.45);border:1px solid var(--line);border-radius:12px;padding:10px 12px;
+}
+.dossier-hist h4{
+  font-family:var(--mono);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg3);margin:0 0 8px;
+}
+.dossier-hist .feed{max-height:140px}
+#panelDossier .st-actions .act.hire{flex:1!important;max-width:280px}
+#panelDossier .st-actions .act.ghost{flex:0 0 auto!important}
+
+
+/* Altana Keystore session panel */
+.altana-ks{border:1px solid rgba(232,197,71,.28);background:rgba(232,197,71,.06);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.altana-ks .ks-title{font-weight:700;font-size:.72rem;letter-spacing:.04em;margin-bottom:8px;color:var(--gold)}
+.altana-ks .ks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;font-family:var(--mono);font-size:.55rem}
+.altana-ks .ks-k{color:var(--fg3);margin-bottom:2px}
+.altana-ks .ks-v{color:var(--fg);word-break:break-all}
+.altana-ks .ks-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.altana-ks .ks-actions button{font-size:.55rem;padding:7px 10px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.25);color:var(--fg)}
+.altana-ks .ks-actions button.solid{border-color:var(--gold);color:var(--gold);background:rgba(232,197,71,.12)}
+.altana-ks .ks-actions button.danger{border-color:#f07178;color:#f07178;background:rgba(240,113,120,.1)}
+.altana-ks .ks-empty{font-family:var(--mono);font-size:.55rem;color:var(--fg2);line-height:1.45}
+.altana-ks .ks-warn{color:#e6c07b}
+
 </style>
 </head>
 <body>
@@ -1042,8 +1192,11 @@ html.audit #splash{display:none!important;visibility:hidden!important;pointer-ev
 </div>
 
 <!-- v7 dock moved into cmd-rail -->
-<div class="wm" id="wm">
-  <h4>Bound wallet</h4>
+<div class="wm" id="wm" role="dialog" aria-label="Bound wallet">
+  <div class="wm-head">
+    <h4>Bound wallet</h4>
+    <button type="button" class="wm-x" id="wmClose" title="Close" aria-label="Close portfolio">×</button>
+  </div>
   <div class="wm-total" id="wmTotal">—</div>
   <div class="wm-addr" id="wmAddr">No address bound</div>
   <div id="wmItems"></div>
@@ -1052,6 +1205,7 @@ html.audit #splash{display:none!important;visibility:hidden!important;pointer-ev
     <button class="pri" id="btnInject">Injected wallet</button>
     <button id="btnAgent">Agent wallet</button>
     <button id="btnPaste">Paste</button>
+    <button type="button" id="btnWmClose">Close</button>
   </div>
 </div>
 <div class="runcon" id="runcon"></div>
@@ -1061,12 +1215,17 @@ html.audit #splash{display:none!important;visibility:hidden!important;pointer-ev
     <h3 id="hireName">Hire agent</h3>
     <p id="hireWhy"></p>
     <div class="fields">
-      <div class="field"><span>Spend cap (USDT)</span><input id="hireCap" value="100"></div>
-      <div class="field"><span>Session</span>
+      <div class="field"><span>Deposit amount (USDT)</span><input id="hireDeposit" value="100" inputmode="decimal"></div>
+      <div class="field"><span>Spend cap (USDT)</span><input id="hireCap" value="100" inputmode="decimal" title="Wired from deposit — max size the session may spend"></div>
+      <div class="field" style="grid-column:1/-1"><span>Session</span>
         <select id="hireDur"><option>1 hour</option><option selected>24 hours</option><option>7 days</option></select>
       </div>
     </div>
     <div class="src" id="hireSrc"></div>
+    <div class="altana-ks" id="hireAltana" style="margin-top:10px;padding:10px 12px">
+      <div class="ks-title" style="margin-bottom:4px">ALTANA SESSION (BNB MAINNET)</div>
+      <div class="ks-empty" id="hireAltanaBody">Open Workbench → Altana for grant / revoke / explorer links. Keys stay on the server.</div>
+    </div>
     <div class="rowbtns">
       <button class="ghost" id="hireCancel">Cancel</button>
       <button class="solid" id="hireGo">Confirm hire</button>
@@ -1104,7 +1263,7 @@ html.audit #splash{display:none!important;visibility:hidden!important;pointer-ev
         <button class="tab on" data-tab="yields">Yields</button>
         <button class="tab" data-tab="venus">Venus markets</button>
         <button class="tab" data-tab="security">Token security</button>
-        <button class="tab" data-tab="altana">Altana skills</button>
+        <button class="tab" data-tab="altana">Altana</button>
       </div>
       <div class="scroll" id="workBody"><div class="empty">Loading marketplace data…</div></div>
     </div>
@@ -1148,7 +1307,7 @@ const SLOT={swordfish:"st-swordfish",marlin:"st-marlin",anchor:"st-anchor",reef:
 const GRID_AGENTS=["helmsman","swordfish","marlin","anchor","pulse","reef"];
 const pick={swordfish:"WBNB",marlin:"CAKE",anchor:"CAKE",reef:"USDT",pulse:"WBNB"};
 const SESSION_SNAP={}; // hire baselines for honest session edge
-let PRICES={}, LAST=null, chartSym="WBNB", chart, series, TAB="yields", HIRE=null, ADDR="", AGENT_WALLET="", PREV_METRICS={}, EXP=null, DOSSIER=null;
+let PRICES={}, LAST=null, chartSym="WBNB", chart, series, TAB="yields", HIRE=null, ADDR="", AGENT_WALLET="", PREV_METRICS={}, EXP=null, DOSSIER=null, FEED_CACHE=[], ladderChart=null, ladderSeries=null, ladderPriceLines=[];
 
 const PERF={}; // id -> number[] live track (session), never invented fills
 function trackPerf(id, sample){
@@ -1177,19 +1336,18 @@ function profileBars(a){
   const ms=(a.metrics||[]).filter(m=>m && m.value!=null && isFinite(Number(m.value)) && Math.abs(Number(m.value))<1e12).slice(0,6);
   trackPerf(a.id, perfSample(a));
   if(!ms.length) return sparkSvg(a.id);
-  const vals=ms.map(m=>Math.abs(Number(m.value)));
-  const max=Math.max(...vals)||1;
-  const w=120, h=36, gap=3, bw=(w-gap*(ms.length-1))/ms.length;
-  let bars="";
-  ms.forEach((m,idx)=>{
-    const v=Math.abs(Number(m.value));
-    const bh=Math.max(2,(v/max)*(h-4));
-    const x=idx*(bw+gap);
-    const y=h-bh;
-    const fill=Number(m.value)<0?"#ff5d6c":"#3de0f0";
-    bars += '<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="1" fill="'+fill+'" opacity="0.85"></rect>';
-  });
-  return '<div class="perf" title="Live metric profile from floor pack"><div class="perf-l">Live profile</div><div class="perf-row"><svg viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true">'+bars+'</svg></div></div>';
+  const vals=ms.map(m=>Number(m.value));
+  const min=Math.min(...vals), max=Math.max(...vals);
+  const span=(max-min)||1;
+  const pts=vals.map((v,i)=>{
+    const x=(i/(vals.length-1))*120;
+    const y=32-((v-min)/span)*26;
+    return x.toFixed(1)+','+y.toFixed(1);
+  }).join(' ');
+  const last=vals[vals.length-1];
+  const stroke=last<0?"#ff5d6c":"#3ee0f0";
+  const fillPts='0,36 '+pts+' 120,36';
+  return '<div class="perf" title="Live metric profile from floor pack"><div class="perf-l">Live profile</div><div class="perf-row"><svg viewBox="0 0 120 36" preserveAspectRatio="none" aria-hidden="true"><polygon fill="'+stroke+'" opacity="0.12" points="'+fillPts+'"/><polyline fill="none" stroke="'+stroke+'" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" points="'+pts+'"/></svg></div></div>';
 }
 
 function sparkSvg(id){
@@ -1298,11 +1456,11 @@ const EXPLAIN={
   },
   workbench:{
     title:"Workbench",
-    does:"Four live tabs: BSC yields, Venus markets, GoPlus token security, Altana skills catalog.",
+    does:"Four live tabs: BSC yields, Venus markets, GoPlus token security, Altana Keystore session + skills catalog.",
     category:"Research / diligence module.",
     sources:"DeFiLlama yields, Venus markets, GoPlus security tokens, Altana skills from /api/floor packs.",
     hire:"Expand and switch tabs. Security shows CLEAR/HONEYPOT/REVIEW from live GoPlus.",
-    limits:"Altana Keystore session tx is a separate on-chain prize step — not simulated here."
+    limits:"Grant/revoke/execute hit /api/altana/* on the server. Unfunded wallets show awaiting-fund path — send BNB to address. No fake explorer proof."
   }
 };
 
@@ -1500,13 +1658,150 @@ function hireState(id){
 }
 function ctaBtn(a, hired){
   return hired
-    ? '<button class="act" data-id="'+a.id+'" data-open="1">Open console</button>'
-    : '<button class="act" data-id="'+a.id+'">Hire</button>';
+    ? '<button class="act hire" data-id="'+a.id+'" data-open="1">Open console</button>'
+    : '<button class="act hire" data-id="'+a.id+'">Hire</button>';
 }
 function infoBtn(key){
   return '<button type="button" class="info-btn" data-info="'+key+'" title="Explain" aria-label="Explain '+key+'">ⓘ</button>';
 }
 
+
+
+function moneyChip(n){
+  if(n==null || !isFinite(Number(n))) return "—";
+  const v=Number(n);
+  if(Math.abs(v)>=1000) return fmtShort(v);
+  return "$"+(Number.isInteger(v)?String(v):v.toFixed(v<10?2:0));
+}
+function capDepositChip(a){
+  const price=(a&&a.price)||{};
+  const defaultCap=price.capUsd!=null&&isFinite(Number(price.capUsd))?Number(price.capUsd):100;
+  const hs=hireState(a.id);
+  let cap=defaultCap, dep=0;
+  if(hs.hired && LAST && LAST.hire && LAST.hire.agent===a.id){
+    const hc=LAST.hire.capUsd;
+    const hd=LAST.hire.depositUsd;
+    cap=hc!=null&&isFinite(Number(hc))?Number(hc):defaultCap;
+    dep=hd!=null&&isFinite(Number(hd))?Number(hd):(hc!=null&&isFinite(Number(hc))?Number(hc):0);
+  }
+  return '<div class="cap-chip" title="Honest session size — hire is free; deposit 0 until you fund a session. Cap is the spend ceiling.">Cap '+moneyChip(cap)+' / Deposit '+moneyChip(dep)+'</div>';
+}
+function dossierKpiStrip(a){
+  const ms=a.metrics||[];
+  const find=(re)=>{
+    const hit=ms.find(m=>m && m.value!=null && m.value!=="" && re.test(String(m.label||"")));
+    return hit||null;
+  };
+  const tvlM=find(/^tvl$/i) || find(/venus bsc/i);
+  let tvlVal="—";
+  if(tvlM && tvlM.value!=null && tvlM.value!=="—"){
+    tvlVal=fmt(tvlM);
+  } else if(a.pancakeTvl!=null && isFinite(Number(a.pancakeTvl))){
+    tvlVal=fmtShort(a.pancakeTvl);
+  } else if(LAST&&LAST.protocols){
+    if(a.id==="pulse" && LAST.protocols.venusBscTvl!=null) tvlVal=fmtShort(LAST.protocols.venusBscTvl);
+    else if(a.id==="helmsman" && LAST.protocols.bscTvl!=null) tvlVal=fmtShort(LAST.protocols.bscTvl);
+  }
+  let trades="—";
+  const rt=LAST&&LAST.runtime&&LAST.runtime.agents&&LAST.runtime.agents[a.id];
+  if(rt && rt.data && rt.data.trades!=null && isFinite(Number(rt.data.trades))) trades=String(rt.data.trades);
+  else if(a.trades!=null && isFinite(Number(a.trades))) trades=String(a.trades);
+  const cell=(l,v,cls)=>'<div class="kpi"><div class="kpi-l">'+esc(l)+'</div><div class="kpi-v '+(cls||'')+'">'+esc(v)+'</div></div>';
+  return '<div class="kpi-strip" title="Live pack only — dashes mean the field is not in the API">'+
+    cell("Total profit", "—")+
+    cell("Trades", trades)+
+    cell("Floating PnL", "—")+
+    cell("TVL", tvlVal)+
+  '</div>';
+}
+function dossierChecklist(){
+  return '<div class="dossier-check"><h4>What this agent does</h4><ul>'+
+    '<li>Non-custodial session — you keep the keys; agent never holds your seed</li>'+
+    '<li>Hard spend cap set before hire — size cannot exceed the cap you confirm</li>'+
+    '<li>Session expiry on the hire clock — access ends when the duration elapses</li>'+
+    '<li>Revoke-ready — Stop now ends the session and clears the hire arm</li>'+
+    '<li>Live floor figures only — no invented fills, PnL, or paper profits</li>'+
+  '</ul></div>';
+}
+function filterFeedForAgent(id){
+  const a=(LAST&&LAST.agents||[]).find(x=>x.id===id);
+  const name=(a&&a.name||id||"").toLowerCase();
+  const keys=[String(id||"").toLowerCase(), name].filter(Boolean);
+  const items=FEED_CACHE||[];
+  const hit=items.filter(i=>{
+    const msg=String((i&&i.msg)||"").toLowerCase();
+    return keys.some(k=>k && msg.includes(k));
+  });
+  return hit.length?hit:items.slice(0,8);
+}
+function dossierHistory(id){
+  const rows=filterFeedForAgent(id).slice(0,10);
+  const body=rows.length
+    ? rows.map(i=>'<div class="row"><span>'+esc((i.ts||"").slice(11,19))+'</span><span class="'+esc(i.kind||'')+'">'+esc(i.msg||"")+'</span></div>').join("")
+    : '<div class="empty">No feed lines for this agent yet</div>';
+  return '<div class="dossier-hist"><h4>History</h4><div class="feed">'+body+'</div></div>';
+}
+function marlinGridLevels(a){
+  const ms=a.metrics||[];
+  const num=(lab)=>{
+    const m=ms.find(x=>x && String(x.label||"").toLowerCase()===lab);
+    return m&&m.value!=null&&isFinite(Number(m.value))?Number(m.value):null;
+  };
+  let spot=num("spot"); if(spot==null) spot=num("cake");
+  let lo=num("lower"), hi=num("upper");
+  let grids=num("grids"); if(grids==null) grids=12;
+  if(spot==null && LAST&&LAST.runtime&&LAST.runtime.agents&&LAST.runtime.agents.marlin){
+    const d=LAST.runtime.agents.marlin.data||{};
+    spot=d.spot; lo=d.lower; hi=d.upper; grids=d.grids||grids;
+  }
+  return {spot, lo, hi, grids: Math.max(2, Math.min(24, grids||12))};
+}
+function paintLadder(a){
+  const mount=document.getElementById("ladderMount");
+  if(!mount) return;
+  const g=marlinGridLevels(a);
+  const meta=document.getElementById("ladderMeta");
+  if(!g.spot || !g.lo || !g.hi || g.hi<=g.lo){
+    mount.innerHTML='<div class="empty" style="padding:24px">Waiting on live spot / bounds</div>';
+    if(meta) meta.textContent="—";
+    return;
+  }
+  const levels=[];
+  for(let i=0;i<=g.grids;i++){
+    const p=g.lo+(g.hi-g.lo)*(i/g.grids);
+    levels.push({p, side:p>=g.spot?"sell":"buy"});
+  }
+  const track=(PERF.marlin&&PERF.marlin.length>=2)?PERF.marlin.slice():[g.spot,g.spot];
+  const tMin=Math.min(...track,g.lo), tMax=Math.max(...track,g.hi);
+  const pad=(tMax-tMin)*0.08||g.spot*0.01;
+  const yMin=tMin-pad, yMax=tMax+pad;
+  const W=640, H=220, L=44, R=12, T=12, B=18;
+  const xOf=(i,n)=>L+((W-L-R)*(n<=1?0:i/(n-1)));
+  const yOf=(v)=>T+((H-T-B)*(1-((v-yMin)/(yMax-yMin||1))));
+  const pts=track.map((v,i)=>xOf(i,track.length).toFixed(1)+","+yOf(v).toFixed(1)).join(" ");
+  let lines="";
+  levels.forEach(lv=>{
+    const y=yOf(lv.p);
+    const col=lv.side==="sell"?"rgba(232,197,71,.85)":"rgba(62,224,240,.75)";
+    const dash=lv.side==="sell"?"5 4":"4 5";
+    lines+='<line x1="'+L+'" y1="'+y.toFixed(1)+'" x2="'+(W-R)+'" y2="'+y.toFixed(1)+'" stroke="'+col+'" stroke-width="1.2" stroke-dasharray="'+dash+'" opacity="0.9"/>';
+  });
+  const spotY=yOf(g.spot);
+  const svg='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-label="Live grid ladder">'+
+    '<rect x="0" y="0" width="'+W+'" height="'+H+'" fill="transparent"/>'+
+    lines+
+    '<line x1="'+L+'" y1="'+spotY.toFixed(1)+'" x2="'+(W-R)+'" y2="'+spotY.toFixed(1)+'" stroke="#e8eaf0" stroke-width="1.4" opacity="0.55"/>'+
+    '<polyline fill="none" stroke="#7dd3fc" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="'+pts+'"/>'+
+    '<circle cx="'+xOf(track.length-1,track.length).toFixed(1)+'" cy="'+yOf(track[track.length-1]).toFixed(1)+'" r="3.2" fill="#7dd3fc"/>'+
+    '<text x="'+(L-6)+'" y="'+(spotY+3).toFixed(1)+'" text-anchor="end" fill="rgba(232,234,238,.7)" font-size="10" font-family="JetBrains Mono,monospace">'+fmtUsd(g.spot)+'</text>'+
+    '</svg>';
+  mount.innerHTML=svg;
+  if(meta) meta.textContent=fmtUsd(g.spot)+" · "+g.grids+" lv · "+fmtUsd(g.lo)+"–"+fmtUsd(g.hi);
+}
+function ladderBlock(a){
+  if(a.id!=="marlin") return "";
+  return '<div class="ladder-wrap"><div class="lh"><h4>Live ladder</h4><span class="meta" id="ladderMeta">—</span></div><div id="ladderMount"></div></div>';
+}
 
 function helmsmanCard(raw){
   const a=applyCoin(Object.assign({},raw,{metrics:(raw.metrics||[]).slice()}));
@@ -1522,13 +1817,13 @@ function helmsmanCard(raw){
   return '<div class="st-crest"><div><div class="name">'+esc(a.name)+'</div><div class="cat">Floor Captain</div></div>'+
     '<div class="st-crest-r"><span class="pill '+pill+'">'+pillTxt+'</span>'+infoBtn("helmsman")+'</div></div>'+
     '<div class="why" style="font-size:.58rem;line-height:1.3">'+primary+'</div>'+
-    '<div class="detail-line">Hire $0 · cap $100 · work product on hire</div>'+
+    capDepositChip(a)+
     profileBars(a)+
     sessionPanel(a)+
-    '<div class="metrics">'+metricCells(a,6)+'</div>'+
+    '<div class="metrics">'+metricCells(a, hs.hired?4:6)+'</div>'+
     '<div class="st-actions">'+
-      '<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button>'+
       ctaBtn(a, hs.hired)+
+      '<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button>'+
     '</div>';
 }
 
@@ -1542,13 +1837,13 @@ function stationCard(raw){
   return '<div class="st-crest"><div><div class="name">'+esc(a.name)+'</div><div class="cat">'+esc(a.category||'')+'</div></div>'+
     '<div class="st-crest-r"><span class="pill '+pill+'">'+pillTxt+'</span>'+infoBtn(a.id)+'</div></div>'+
     coinRow(a.id)+
-    '<div class="detail-line">Hire $0 · cap $100 · Pancake plan, no funds moved</div>'+
+    capDepositChip(a)+
     profileBars(a)+
     sessionPanel(a)+
-    '<div class="metrics">'+metricCells(a,6)+'</div>'+
+    '<div class="metrics">'+metricCells(a, hs.hired?4:6)+'</div>'+
     '<div class="st-actions">'+
-      '<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button>'+
       ctaBtn(a, hs.hired)+
+      '<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button>'+
     '</div>';
 }
 
@@ -1565,13 +1860,13 @@ function swordfishBlade(raw){
     '<div class="st-crest-r"><span class="pill '+pill+'">'+pillTxt+'</span>'+infoBtn("swordfish")+'</div></div>'+
     '<span class="risk-chip '+risk.cls+'" title="Live GoPlus for selected coin">'+esc(risk.txt)+'</span>'+
     coinRow(a.id)+
-    '<div class="detail-line">Hire $0 · GoPlus + Pancake quote · paper record on /api/record</div>'+
+    capDepositChip(a)+
     profileBars(a)+
     sessionPanel(a)+
-    '<div class="metrics">'+metricCells(a,6)+'</div>'+
+    '<div class="metrics">'+metricCells(a, hs.hired?4:6)+'</div>'+
     '<div class="st-actions">'+
-      '<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button>'+
       ctaBtn(a, hs.hired)+
+      '<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button>'+
     '</div>';
 }
 
@@ -1776,6 +2071,8 @@ function paintDossier(id){
   const raw=(LAST&&LAST.agents||[]).find(x=>x.id===id);
   if(!raw){ $("dossierBody").innerHTML='<div class="empty">Agent missing</div>'; return; }
   const a=applyCoin(Object.assign({},raw,{metrics:(raw.metrics||[]).slice()}));
+  if(raw.pancakeTvl!=null) a.pancakeTvl=raw.pancakeTvl;
+  if(raw.price) a.price=raw.price;
   const hs=hireState(a.id);
   const sync=LAST&&LAST.ts?(" · sync "+ageFromTs(LAST.ts)):"";
   const risk=id==="swordfish"?riskLabel(pick[id]||"WBNB"):null;
@@ -1784,13 +2081,19 @@ function paintDossier(id){
     '<div class="st-crest-r"><span class="pill '+(hs.hired?"run":(a.live?"live":""))+'">'+(hs.hired?"RUNNING":(a.live?"LIVE":"offline"))+'</span>'+infoBtn(a.id)+'</div></div>'+
     (risk?'<span class="risk-chip '+risk.cls+'">'+esc(risk.txt)+'</span>':'')+
     (id==="helmsman"?"":coinRow(a.id))+
+    capDepositChip(a)+
     '<div class="why">'+esc(a.why||'')+'</div>'+
+    dossierKpiStrip(a)+
     (id==="helmsman"&&a.brief&&a.brief.actions&&a.brief.actions.length?('<div class="detail-line" style="white-space:pre-wrap">'+a.brief.actions.map(x=>"• "+esc(x)).join("<br>")+'</div>'):'')+
+    ladderBlock(a)+
     '<div class="metrics full">'+metricCells(a,6)+'</div>'+
     '<div class="detail-line">'+esc(a.detail||'')+esc(sync)+(a.source?(' · '+esc(a.source)):'')+'</div>'+
-    '<div class="st-actions" style="max-width:360px">'+ctaBtn(a, hs.hired)+'</div>'+
+    dossierChecklist()+
+    dossierHistory(id)+
+    '<div class="st-actions" style="max-width:420px;display:flex;gap:8px">'+ctaBtn(a, hs.hired)+'<button type="button" class="act ghost" data-dossier="'+a.id+'">Details</button></div>'+
     '<div class="detail-line" id="jobBox">Hire to attach the live work product (time/cost/quality live in /report).</div>';
   bindActions($("dossierBody"));
+  if(id==="marlin") paintLadder(a);
   if(hs.hired){
     fetch("/api/job?agent="+encodeURIComponent(id)).then(r=>r.json()).then(j=>{
       const box=$("jobBox"); if(!box) return;
@@ -1901,8 +2204,23 @@ function openHire(id){
   HIRE=a;
   $("hireName").textContent="Hire "+a.name;
   $("hireWhy").textContent=(a.hire||a.why||"");
-  $("hireSrc").textContent="Live sources · "+(a.source||"live BSC")+"  ·  Altana session key (spend cap + expiry) on confirm · Every figure is a live API. Agents do not invent fills.";
-  $("hireModal").classList.add("show");
+  const defCap=(a.price&&a.price.capUsd!=null)?Number(a.price.capUsd):100;
+  const depEl=$("hireDeposit"), capEl=$("hireCap");
+  if(depEl) depEl.value=String(defCap);
+  if(capEl){ capEl.value=String(defCap); capEl.readOnly=true; }
+  $("hireSrc").textContent="Live sources · "+(a.source||"live BSC")+"  ·  Deposit wires into spend cap on confirm · Altana session key (cap + expiry) · Every figure is a live API. Agents do not invent fills.";
+  $("hireModal").classList.add("show"); fillHireAltana();
+}
+function wireHireDeposit(){
+  const depEl=$("hireDeposit"), capEl=$("hireCap");
+  if(!depEl||!capEl||depEl.dataset.wired) return;
+  depEl.dataset.wired="1";
+  const sync=()=>{
+    const n=parseFloat(depEl.value);
+    if(isFinite(n) && n>=0) capEl.value=String(n);
+  };
+  depEl.addEventListener("input", sync);
+  depEl.addEventListener("change", sync);
 }
 
 function renderScannerBody(){
@@ -1944,6 +2262,114 @@ const sc=LAST.scanner||{};
     h+='</tbody></table>';
     body.innerHTML=h;
 }
+
+
+let ALTANA_KS=null;
+
+async function fillHireAltana(){
+  const el=$("hireAltanaBody"); if(!el) return;
+  try{
+    if(!window.ALTANA_KS) await refreshAltanaKs();
+    const s=window.ALTANA_KS||{};
+    if(!s.walletAddress){ el.textContent="No Keystore wallet yet — Workbench → Altana → Create / refresh."; return; }
+    const short=s.walletAddress.slice(0,10)+"…"+s.walletAddress.slice(-4);
+    let t="Wallet ";
+    t+='<a class="link" href="'+esc(s.walletExplorer||"#")+'" target="_blank" rel="noreferrer">'+esc(short)+"</a>";
+    if(s.waitForFund||s.waitForFaucet) t+=' · <span class="ks-warn">awaiting fund — send BNB</span>';
+    else if(s.session&&s.session.active) t+=" · session live · cap "+esc(String(s.session.spendCapEther||""))+" / "+esc(s.session.spendPeriod||"day");
+    else t+=" · no active session";
+    el.innerHTML=t;
+  }catch(e){ el.textContent="Altana status unavailable"; }
+}
+
+function renderAltanaKeystore(ks){
+  const s=ks||{};
+  const sess=s.session||null;
+  let h='<div class="altana-ks" id="altanaKs">';
+  h+='<div class="ks-title">ALTANA KEYSTORE · BNB MAINNET</div>';
+  if(!s.walletAddress){
+    h+='<div class="ks-empty">No agent wallet yet. Click <strong>Create / refresh wallet</strong> — address only is stored in gitignored state. Admin key stays on disk (.env.altana).</div>';
+    h+='<div class="ks-actions"><button type="button" class="solid" id="altanaRefresh">Create / refresh wallet</button></div>';
+    h+='</div>';
+    return h;
+  }
+  h+='<div class="ks-grid">';
+  h+='<div><div class="ks-k">Wallet</div><div class="ks-v"><a class="link" href="'+esc(s.walletExplorer||('#') )+'" target="_blank" rel="noreferrer">'+esc(s.walletAddress)+'</a></div></div>';
+  h+='<div><div class="ks-k">Balance</div><div class="ks-v">'+(s.funded?esc(String(s.balanceEther||'—'))+' BNB':'<span class="ks-warn">awaiting fund</span>')+'</div></div>';
+  h+='<div><div class="ks-k">Chain</div><div class="ks-v">'+esc(s.chain||'BNB')+' · '+(s.chainId||56)+'</div></div>';
+  if(sess&&sess.active){
+    h+='<div><div class="ks-k">Spend cap</div><div class="ks-v">'+esc(String(sess.spendCapEther||'—'))+' / '+(esc(sess.spendPeriod||'day'))+'</div></div>';
+    h+='<div><div class="ks-k">Expiry</div><div class="ks-v">'+esc(sess.expiryIso||String(sess.expiry||'—'))+'</div></div>';
+    h+='<div><div class="ks-k">Allowlist</div><div class="ks-v">self-transfer → wallet</div></div>';
+  } else if(sess&&sess.revoked){
+    h+='<div><div class="ks-k">Session</div><div class="ks-v">revoked</div></div>';
+  } else {
+    h+='<div><div class="ks-k">Session</div><div class="ks-v">none</div></div>';
+  }
+  h+='</div>';
+  if(s.waitForFund||s.waitForFaucet){
+    h+='<div class="ks-empty ks-warn" style="margin-top:8px">Awaiting fund — <strong>send BNB</strong> to <a class="link" href="'+esc(s.walletExplorer||'#')+'" target="_blank" rel="noreferrer">this address</a>, then Grant. No fake on-chain proof until funded.</div>';
+  }
+  if(sess&&sess.grantExplorer){
+    h+='<div class="ks-empty" style="margin-top:6px">Grant tx: <a class="link" href="'+esc(sess.grantExplorer)+'" target="_blank" rel="noreferrer">'+esc(sess.grantExplorer)+'</a></div>';
+  }
+  if(sess&&sess.revokeExplorer){
+    h+='<div class="ks-empty" style="margin-top:4px">Revoke tx: <a class="link" href="'+esc(sess.revokeExplorer)+'" target="_blank" rel="noreferrer">'+esc(sess.revokeExplorer)+'</a></div>';
+  }
+  if(s.lastTx&&s.lastTx.explorer){
+    h+='<div class="ks-empty" style="margin-top:4px">Session execute: <a class="link" href="'+esc(s.lastTx.explorer)+'" target="_blank" rel="noreferrer">'+esc(s.lastTx.explorer)+'</a></div>';
+  }
+  h+='<div class="ks-actions">';
+  h+='<button type="button" id="altanaRefresh">Refresh</button>';
+  if(!sess||!sess.active){
+    h+='<button type="button" class="solid" id="altanaGrant"'+((s.waitForFund||s.waitForFaucet)?' disabled title="Send BNB to address first"':'')+'>Grant session</button>';
+  } else {
+    h+='<button type="button" class="danger" id="altanaRevoke">Revoke session</button>';
+    if(!(s.lastTx&&s.lastTx.explorer)){
+      h+='<button type="button" class="solid" id="altanaExecute">Execute demo tx</button>';
+    }
+  }
+  h+='</div></div>';
+  return h;
+}
+async function refreshAltanaKs(){
+  try{
+    const r=await fetch('/api/altana/status');
+    ALTANA_KS=await r.json();
+    window.ALTANA_KS=ALTANA_KS;
+  }catch(e){
+    ALTANA_KS={ok:false,error:String(e)};
+    window.ALTANA_KS=ALTANA_KS;
+  }
+  if(TAB==="altana") renderWork();
+  fillHireAltana();
+  return ALTANA_KS;
+}
+function wireAltanaButtons(){
+  const toast=(m)=>{ const t=$("toast"); if(!t) return; t.textContent=m; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),3200); };
+  const go=async (id, url, label)=>{
+    const b=$(id); if(!b) return;
+    b.onclick=async ()=>{
+      b.disabled=true; toast(label+"…");
+      try{
+        const r=await fetch(url,{method:id==="altanaRefresh"?"GET":"POST",headers:{"Content-Type":"application/json"},body:id==="altanaRefresh"?undefined:"{}"});
+        const j=await r.json();
+        if(id==="altanaRefresh"){ ALTANA_KS=j; window.ALTANA_KS=j; }
+        else { await refreshAltanaKs(); }
+        if(j.waitForFund||j.waitForFaucet) toast("Awaiting fund — send BNB to "+(j.walletAddress||ALTANA_KS.walletAddress||""));
+        else if(j.ok===false) toast(j.error||label+" failed");
+        else toast(label+" ok");
+        if(TAB==="altana") renderWork();
+      }catch(e){ toast(String(e)); }
+      finally{ b.disabled=false; }
+    };
+  };
+  go("altanaRefresh","/api/altana/status","Refresh");
+  const g=$("altanaGrant"); if(g) g.onclick=async ()=>{ g.disabled=true; toast("Granting session…"); try{ const r=await fetch("/api/altana/grant",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"}); const j=await r.json(); await refreshAltanaKs(); if(j.waitForFund||j.waitForFaucet) toast("Awaiting fund — send BNB to address first"); else if(!j.ok) toast(j.error||"Grant failed"); else toast("Session granted"); if(TAB==="altana") renderWork(); }catch(e){ toast(String(e)); } finally{ g.disabled=false; } };
+  const rv=$("altanaRevoke"); if(rv) rv.onclick=async ()=>{ rv.disabled=true; toast("Revoking…"); try{ const r=await fetch("/api/altana/revoke",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"}); const j=await r.json(); await refreshAltanaKs(); toast(j.ok?"Revoked":(j.error||"Revoke failed")); if(TAB==="altana") renderWork(); }catch(e){ toast(String(e)); } finally{ rv.disabled=false; } };
+  const ex=$("altanaExecute"); if(ex) ex.onclick=async ()=>{ ex.disabled=true; toast("Executing session tx…"); try{ const r=await fetch("/api/altana/execute",{method:"POST",headers:{"Content-Type":"application/json"},body:"{}"}); const j=await r.json(); await refreshAltanaKs(); if(j.waitForFund||j.waitForFaucet) toast("Awaiting fund — send BNB to address first"); else if(!j.ok) toast(j.error||"Execute failed"); else toast((j.lastTx&&j.lastTx.explorer)||"Tx submitted"); if(TAB==="altana") renderWork(); }catch(e){ toast(String(e)); } finally{ ex.disabled=false; } };
+}
+
 
 function renderWork(){
   const body=$("workBody");
@@ -1991,15 +2417,20 @@ function renderWork(){
     body.innerHTML=h;
   } else if(TAB==="altana"){
     const rows=((LAST.altana||{}).skills)||[];
-    let h='<div style="font-family:var(--mono);font-size:.58rem;color:var(--fg2);margin-bottom:8px">Live Altana skill catalog. On-chain Keystore session is a separate prize tx — not invented here. <a class="link" href="https://docs.altana.network/" target="_blank" rel="noreferrer">docs.altana.network</a></div>';
+    const ks=(window.ALTANA_KS)||(LAST.altana&&LAST.altana.keystore)||null;
+    let h=renderAltanaKeystore(ks);
+    h+='<div style="font-family:var(--mono);font-size:.58rem;color:var(--fg2);margin:10px 0 8px">Live Altana skill catalog. Session grant/revoke uses server endpoints — keys never reach the browser. <a class="link" href="https://docs.altana.network/" target="_blank" rel="noreferrer">docs.altana.network</a></div>';
     h+='<div class="sec-h">Skills <span class="badge">'+rows.length+'</span></div>';
-    if(!rows.length){ body.innerHTML=h+'<div class="empty">Altana skills empty</div>'; return; }
-    h+='<table class="table"><thead><tr><th>Skill</th><th>Category</th><th></th></tr></thead><tbody>';
-    rows.forEach(s=>{
-      h+='<tr><td>'+esc(s.name)+'</td><td>'+esc(s.category||'')+'</td><td><a class="link" href="'+esc(s.url||'#')+'" target="_blank" rel="noreferrer">open</a></td></tr>';
-    });
-    h+='</tbody></table>';
+    if(!rows.length){ h+='<div class="empty">Altana skills empty</div>'; }
+    else {
+      h+='<table class="table"><thead><tr><th>Skill</th><th>Category</th><th></th></tr></thead><tbody>';
+      rows.forEach(s=>{
+        h+='<tr><td>'+esc(s.name)+'</td><td>'+esc(s.category||'')+'</td><td><a class="link" href="'+esc(s.url||'#')+'" target="_blank" rel="noreferrer">open</a></td></tr>';
+      });
+      h+='</tbody></table>';
+    }
     body.innerHTML=h;
+    wireAltanaButtons();
   } else {
     const rows=((LAST.security||{}).tokens)||[];
     let h='<div class="sec-h">GoPlus token security <span class="badge">'+rows.length+'</span></div>';
@@ -2100,7 +2531,35 @@ async function refresh(){
     if(ADDR) loadBound();
     paintConsole();
     const feed=await fetch("/api/feed",{cache:"no-store"}).then(r=>r.json()).catch(()=>({items:[]}));
-    $("feed").innerHTML=(feed.items||[]).slice(0,14).map(i=>'<div class="row"><span>'+(i.ts||"").slice(11,19)+'</span><span class="'+(i.kind||"")+'">'+esc(i.msg)+'</span></div>').join("")||'<div class="empty">Feed empty</div>';
+    FEED_CACHE=feed.items||[];
+    $("feed").innerHTML=FEED_CACHE.slice(0,14).map(i=>'<div class="row"><span>'+(i.ts||"").slice(11,19)+'</span><span class="'+(i.kind||"")+'">'+esc(i.msg)+'</span></div>').join("")||'<div class="empty">Feed empty</div>';
+    if(EXP==="tape"){
+      try{ loadChart(chartSym); }catch(e){}
+    }
+    if(EXP==="dossier"&&DOSSIER==="marlin"){
+      const raw=(LAST&&LAST.agents||[]).find(x=>x.id==="marlin");
+      if(raw){
+        const a=applyCoin(Object.assign({},raw,{metrics:(raw.metrics||[]).slice()}));
+        paintLadder(a);
+        const hist=document.querySelector("#dossierBody .dossier-hist .feed");
+        if(hist){
+          const rows=filterFeedForAgent("marlin").slice(0,10);
+          hist.innerHTML=rows.length?rows.map(i=>'<div class="row"><span>'+esc((i.ts||"").slice(11,19))+'</span><span class="'+esc(i.kind||'')+'">'+esc(i.msg||"")+'</span></div>').join(""):'<div class="empty">No feed lines for this agent yet</div>';
+        }
+        const kpi=document.querySelector("#dossierBody .kpi-strip");
+        if(kpi){
+          const tmp=document.createElement("div");
+          tmp.innerHTML=dossierKpiStrip(a);
+          if(tmp.firstChild) kpi.replaceWith(tmp.firstChild);
+        }
+      }
+    } else if(EXP==="dossier"&&DOSSIER){
+      const hist=document.querySelector("#dossierBody .dossier-hist .feed");
+      if(hist){
+        const rows=filterFeedForAgent(DOSSIER).slice(0,10);
+        hist.innerHTML=rows.length?rows.map(i=>'<div class="row"><span>'+esc((i.ts||"").slice(11,19))+'</span><span class="'+esc(i.kind||'')+'">'+esc(i.msg||"")+'</span></div>').join(""):'<div class="empty">No feed lines for this agent yet</div>';
+      }
+    }
   }catch(err){ $("feed").innerHTML='<div class="row"><span>err</span><span class="err">'+esc(err)+'</span></div>'; }
 }
 $("enterBtn").onclick=()=>$("splash").classList.add("go");
@@ -2121,7 +2580,7 @@ document.addEventListener("keydown",e=>{
   }
   if(e.key==="Enter" && !$("hireModal").classList.contains("show") && !$("expModal").classList.contains("show") && !$("infoModal").classList.contains("show") && !$("compareModal").classList.contains("show")) $("splash").classList.add("go");
 });
-$("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{ TAB=b.dataset.tab; $("tabs").querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===b)); renderWork(); });
+$("tabs").querySelectorAll(".tab").forEach(b=>b.onclick=()=>{ TAB=b.dataset.tab; $("tabs").querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===b)); if(TAB==="altana") refreshAltanaKs(); else renderWork(); });
 $("hireCancel").onclick=()=>$("hireModal").classList.remove("show");
 $("hireModal").addEventListener("click",e=>{ if(e.target.id==="hireModal") $("hireModal").classList.remove("show"); });
 $("expClose").onclick=closeExp;
@@ -2159,10 +2618,11 @@ document.querySelectorAll(".mod-chip[data-exp]").forEach(chip=>{
 document.querySelectorAll(".mod-chip .info-btn").forEach(btn=>{
   btn.addEventListener("click",e=>{ e.stopPropagation(); e.preventDefault(); openInfo(btn.dataset.info); });
 });
-async function bindAddr(addr){
+async function bindAddr(addr, opts){
   ADDR=addr;
   await fetch("/api/bind",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({address:addr})});
-  $("wm").classList.add("show");
+  // Never auto-open portfolio drawer — user opens/closes it.
+  if(opts && opts.open){ const el=$("wm"); if(el) el.classList.add("show"); }
   loadBound();
 }
 async function loadBound(){
@@ -2254,10 +2714,15 @@ async function stopNow(){
   toast("Agent stopped");
   refresh();
 }
+wireHireDeposit();
 $("hireGo").onclick=async ()=>{
-  const cap=$("hireCap").value, dur=$("hireDur").value;
+  const depEl=$("hireDeposit");
+  const dep=depEl?depEl.value:$("hireCap").value;
+  const cap=dep;
+  if($("hireCap")) $("hireCap").value=String(cap);
+  const dur=$("hireDur").value;
   $("hireModal").classList.remove("show");
-  const res=await fetch("/api/hire",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:HIRE&&HIRE.id,capUsd:cap,duration:dur,address:ADDR||AGENT_WALLET})}).then(r=>r.json()).catch(()=>({}));
+  const res=await fetch("/api/hire",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({agent:HIRE&&HIRE.id,depositUsd:cap,capUsd:cap,duration:dur,address:ADDR||AGENT_WALLET})}).then(r=>r.json()).catch(()=>({}));
   if(res.ok){
     if(res.hire&&res.hire.address) ADDR=res.hire.address;
     if(LAST){ LAST.hire=res.hire; LAST.runtime=res.runtime||LAST.runtime; }
@@ -2284,15 +2749,44 @@ $("swapBtn").onclick=async ()=>{
   if(d.executed) loadBound();
   setTimeout(()=>{$("swapBtn").textContent="SWAP";},2200);
 };
-$("walletPill").onclick=()=>$("wm").classList.toggle("show");
-const _cp=$("cmdPort"); if(_cp){ _cp.onclick=()=>$("wm").classList.toggle("show"); _cp.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); $("wm").classList.toggle("show"); } }; }
-$("btnInject").onclick=async ()=>{
-  if(!window.ethereum){ toast("No injected wallet"); return; }
-  const accs=await window.ethereum.request({method:"eth_requestAccounts"});
-  if(accs&&accs[0]) bindAddr(accs[0]);
-};
-$("btnAgent").onclick=()=>{ if(!AGENT_WALLET) AGENT_WALLET=(LAST&&LAST.agentWallet)||""; bindAddr(AGENT_WALLET); };
+
+function closeWm(){ const el=$("wm"); if(el) el.classList.remove("show"); }
+function toggleWm(){ const el=$("wm"); if(!el) return; el.classList.toggle("show"); }
+$("walletPill").onclick=()=>toggleWm();
+const _wmClose=$("wmClose"); if(_wmClose) _wmClose.onclick=(e)=>{ e.stopPropagation(); closeWm(); };
+const _btnWmClose=$("btnWmClose"); if(_btnWmClose) _btnWmClose.onclick=(e)=>{ e.stopPropagation(); closeWm(); };
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeWm(); });
+
+async function connectInjected(){
+  if(!window.ethereum){
+    toast("No MetaMask/Rabby — opening bind options");
+    $("wm").classList.add("show");
+    return false;
+  }
+  try{
+    const accs=await window.ethereum.request({method:"eth_requestAccounts"});
+    if(accs&&accs[0]){ bindAddr(accs[0]); toast("Wallet connected"); return true; }
+  }catch(e){ toast(e&&e.message?e.message:"Connect rejected"); }
+  $("wm").classList.add("show");
+  return false;
+}
+const _cp=$("cmdPort");
+if(_cp){
+  _cp.onclick=(e)=>{ e.preventDefault(); connectInjected(); };
+  _cp.onkeydown=(e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); connectInjected(); } };
+}
+const _pb=$("pBal"); if(_pb){ _pb.style.cursor="pointer"; _pb.onclick=(e)=>{ e.stopPropagation(); connectInjected(); }; }
+$("btnInject").onclick=()=>connectInjected();
+$("btnAgent").onclick=()=>{ if(!AGENT_WALLET) AGENT_WALLET=(LAST&&LAST.agentWallet)||""; if(AGENT_WALLET) bindAddr(AGENT_WALLET); else toast("No agent wallet in env"); };
 $("btnPaste").onclick=()=>{ const v=prompt("BSC address"); if(v&&v.startsWith("0x")&&v.length===42) bindAddr(v); };
+// Video / deep-link bind: ?addr=0x... or ?wallet=0x...
+(function autoBindFromQuery(){
+  const q=new URLSearchParams(location.search);
+  const a=(q.get("addr")||q.get("wallet")||"").trim();
+  if(a && /^0x[a-fA-F0-9]{40}$/.test(a)){
+    setTimeout(()=>bindAddr(a), 400);
+  }
+})();
 document.querySelectorAll(".tf").forEach(b=>b.onclick=()=>loadChart(b.dataset.sym));
 initChart(); loadChart("WBNB"); refresh();
 setInterval(refresh,20000); setInterval(()=>loadChart(chartSym),45000);

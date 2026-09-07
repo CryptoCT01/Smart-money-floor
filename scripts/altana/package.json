@@ -1,0 +1,18 @@
+{
+  "name": "smf-altana",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Altana BNB mainnet wallet + session scripts for Smart Money Floor",
+  "scripts": {
+    "create-wallet": "node create-wallet.mjs",
+    "grant": "node grant-session.mjs",
+    "revoke": "node revoke-session.mjs",
+    "execute": "node execute-session.mjs",
+    "status": "node status.mjs"
+  },
+  "dependencies": {
+    "@altananetwork/sdk": "latest",
+    "viem": "latest"
+  }
+}
