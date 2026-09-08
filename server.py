@@ -50,7 +50,7 @@ HIRE: dict = {
     "hiredAt": None,
 }
 
-PORT = 8090
+PORT = int(os.environ.get("PORT") or 8090)
 STARTED = datetime.now(timezone.utc)
 FEED: list[dict] = []
 FEED_LOCK = threading.Lock()
