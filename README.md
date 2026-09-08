@@ -4,6 +4,15 @@ Live **BNB Chain** agent marketplace for [The Smart Money Era](https://www.bnbch
 
 Find → compare → hire BSC specialists from **live** public APIs. Hire is **$0**. Spend cap is the only size a SWAP can use. No mock prices, fake fills, or invented on-chain PnL.
 
+## Live demo
+
+**Floor (public):** https://gauge-fortune-camcorder-explosion.trycloudflare.com
+
+Mac must stay awake for the tunnel. If the link 404s, restart `smtunnel` and update this URL.
+
+Pre-bound wallet walkthrough: https://gauge-fortune-camcorder-explosion.trycloudflare.com/?addr=0xC41828401DABEE1B7Ceaa0E4410601020dB39774
+
+
 ## Agents
 
 | Agent | Role | What hire delivers (funds stay in wallet) |
