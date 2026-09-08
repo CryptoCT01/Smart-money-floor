@@ -355,7 +355,50 @@ class Handler(SimpleHTTPRequestHandler):
                 return
             self._json({"ok": False, "error": "report not generated"}, 404)
             return
-        return super().do_GET()
+        # Public site only — no arbitrary project-file downloads.
+        if path.startswith("/report/"):
+            rel = path[len("/report/"):]
+            if ".." in rel or rel.startswith("/") or chr(92) in rel:
+                self.send_error(404)
+                return
+            allowed_prefixes = ("attachments/",)
+            allowed_exact = {
+                "advantage.png",
+                "advantage.json",
+                "proof.json",
+                "Smart-Money-Floor-60s.mp4",
+                "Smart-Money-Floor-demo-edit.mp4",
+            }
+            ok = rel in allowed_exact or any(rel.startswith(pref) and rel.count("/") == 1 for pref in allowed_prefixes)
+            if not ok:
+                self.send_error(404)
+                return
+            fp = (ROOT / "report" / rel).resolve()
+            root = (ROOT / "report").resolve()
+            if root not in fp.parents and fp != root:
+                self.send_error(404)
+                return
+            if not fp.is_file():
+                self.send_error(404)
+                return
+            data = fp.read_bytes()
+            ctype = "application/octet-stream"
+            if fp.suffix == ".json":
+                ctype = "application/json; charset=utf-8"
+            elif fp.suffix == ".png":
+                ctype = "image/png"
+            elif fp.suffix == ".mp4":
+                ctype = "video/mp4"
+            elif fp.suffix == ".html":
+                ctype = "text/html; charset=utf-8"
+            self.send_response(200)
+            self.send_header("Content-Type", ctype)
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+            return
+        self.send_error(404)
 
     def _read_json(self) -> dict:
         n = int(self.headers.get("Content-Length") or 0)
@@ -416,6 +459,9 @@ class Handler(SimpleHTTPRequestHandler):
             self._json({"ok": True, "hire": dict(HIRE)})
             return
         if path == "/api/altana/grant":
+            if os.environ.get("ALLOW_ALTANA", "").strip() not in ("1", "true", "yes"):
+                self._json({"ok": False, "error": "Altana grant disabled on public Floor"}, 403)
+                return
             try:
                 ensure = altana_keystore.ensure_wallet()
                 if ensure.get("waitForFund") or ensure.get("waitForFaucet"):
@@ -433,6 +479,9 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": False, "error": str(exc)}, 500)
             return
         if path == "/api/altana/revoke":
+            if os.environ.get("ALLOW_ALTANA", "").strip() not in ("1", "true", "yes"):
+                self._json({"ok": False, "error": "Altana revoke disabled on public Floor"}, 403)
+                return
             try:
                 result = altana_keystore.revoke()
                 if result.get("ok"):
@@ -442,6 +491,9 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": False, "error": str(exc)}, 500)
             return
         if path == "/api/altana/execute":
+            if os.environ.get("ALLOW_ALTANA", "").strip() not in ("1", "true", "yes"):
+                self._json({"ok": False, "error": "Altana execute disabled on public Floor"}, 403)
+                return
             try:
                 result = altana_keystore.execute_demo()
                 code = 200 if result.get("ok") else (402 if (result.get("waitForFund") or result.get("waitForFaucet")) else 400)
@@ -453,6 +505,9 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": False, "error": str(exc)}, 500)
             return
         if path == "/api/swap":
+            if os.environ.get("ALLOW_SWAP", "").strip() not in ("1", "true", "yes"):
+                self._json({"ok": False, "executed": False, "error": "SWAP disabled on public Floor"}, 403)
+                return
             src = str(body.get("from") or "")
             dst = str(body.get("to") or "")
             try:
