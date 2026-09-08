@@ -10,8 +10,6 @@ Find → compare → hire BSC specialists from **live** public APIs. Hire is **$
 
 Mac must stay awake for the tunnel. If the link 404s, restart `smtunnel` and update this URL.
 
-Pre-bound wallet walkthrough: https://gauge-fortune-camcorder-explosion.trycloudflare.com/?addr=0xC41828401DABEE1B7Ceaa0E4410601020dB39774
-
 
 ## Agents
 
