@@ -7,6 +7,7 @@
 <title>Smart Money Floor · BNB Agent Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -2743,12 +2744,106 @@ $("rotateBtn").onclick=()=>{ const a=$("tradeFrom").value,b=$("tradeTo").value; 
 $("swapBtn").onclick=async ()=>{
   const a=$("tradeFrom").value,b=$("tradeTo").value,amt=parseFloat($("tradeAmt").value)||0;
   $("swapBtn").textContent="…";
-  const d=await fetch("/api/swap",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({from:a,to:b,amount:amt})}).then(r=>r.json()).catch(e=>({error:String(e)}));
-  $("swapBtn").textContent=d.executed?"OK":"SWAP";
-  toast(d.executed?(d.summary||"swap sent"):(d.error||"blocked"));
-  if(d.executed) loadBound();
-  setTimeout(()=>{$("swapBtn").textContent="SWAP";},2200);
-};
+  try{
+    if(!window.ethereum){ toast("Install MetaMask or Rabby"); return; }
+    if(typeof ethers==="undefined"){ toast("ethers.js failed to load"); return; }
+    const BSC_HEX="0x38";
+    try{
+      await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:BSC_HEX}]});
+    }catch(swErr){
+      if(swErr && (swErr.code===4902 || String(swErr.message||"").includes("Unrecognized"))){
+        await window.ethereum.request({method:"wallet_addEthereumChain",params:[{
+          chainId:BSC_HEX, chainName:"BNB Smart Chain",
+          nativeCurrency:{name:"BNB",symbol:"BNB",decimals:18},
+          rpcUrls:["https://bsc-dataseed.binance.org"],
+          blockExplorerUrls:["https://bscscan.com"]
+        }]});
+      } else { throw swErr; }
+    }
+    const accs=await window.ethereum.request({method:"eth_requestAccounts"});
+    const me=(accs&&accs[0])||"";
+    if(!me){ toast("connect wallet"); return; }
+    await bindAddr(me);
+    const d=await fetch("/api/swap",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({from:a,to:b,amount:amt,address:me})}).then(r=>r.json()).catch(e=>({error:String(e)}));
+    if(!d || !d.ok || d.mode!=="wallet"){
+      toast((d&&d.error)||"blocked");
+      return;
+    }
+    const provider=new ethers.providers.Web3Provider(window.ethereum);
+    const signer=provider.getSigner();
+    const routerAddr=d.router||"0x10ED43C718714eb63d5aA57B78B54704E256024E";
+    const tokens=d.tokens||{};
+    const WBNB=tokens.WBNB||tokens.BNB||"0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+    const norm=s=>{ const u=String(s||"").toUpperCase(); return u==="WBNB"?"BNB":u; };
+    const from=norm(a), to=norm(b);
+    const tokenAddr=sym=>{ if(sym==="BNB") return null; return tokens[sym]||null; };
+    const ROUTER_ABI=[
+      "function swapExactETHForTokens(uint amountOutMin, address[] path, address to, uint deadline) payable returns (uint[] amounts)",
+      "function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) returns (uint[] amounts)",
+      "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] path, address to, uint deadline) returns (uint[] amounts)"
+    ];
+    const ERC20_ABI=[
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function decimals() view returns (uint8)"
+    ];
+    const router=new ethers.Contract(routerAddr, ROUTER_ABI, signer);
+    const deadline=Math.floor(Date.now()/1000)+60*20;
+    const minOutRaw=d.minOut!=null?d.minOut:(d.quote&&d.quote.minOut);
+    let tx;
+    if(from==="BNB"){
+      const path=[WBNB, tokenAddr(to)];
+      if(!path[1]) throw new Error("unknown token "+to);
+      const value=ethers.utils.parseEther(String(amt));
+      const outTok=new ethers.Contract(path[1], ERC20_ABI, provider);
+      const dec=await outTok.decimals();
+      const amountOutMin=ethers.utils.parseUnits(String(minOutRaw||0), dec);
+      tx=await router.swapExactETHForTokens(amountOutMin, path, me, deadline, {value});
+    } else if(to==="BNB"){
+      const path=[tokenAddr(from), WBNB];
+      if(!path[0]) throw new Error("unknown token "+from);
+      const tok=new ethers.Contract(path[0], ERC20_ABI, signer);
+      const dec=await tok.decimals();
+      const amountIn=ethers.utils.parseUnits(String(amt), dec);
+      const amountOutMin=ethers.utils.parseEther(String(minOutRaw||0));
+      const allow=await tok.allowance(me, routerAddr);
+      if(allow.lt(amountIn)){
+        const appr=await tok.approve(routerAddr, ethers.constants.MaxUint256);
+        toast("Approve in wallet…");
+        await appr.wait();
+      }
+      tx=await router.swapExactTokensForETH(amountIn, amountOutMin, path, me, deadline);
+    } else {
+      const path=[tokenAddr(from), tokenAddr(to)];
+      if(!path[0]||!path[1]) throw new Error("unknown token pair");
+      const route=(path[0].toLowerCase()===WBNB.toLowerCase()||path[1].toLowerCase()===WBNB.toLowerCase())?path:[path[0], WBNB, path[1]];
+      const tokIn=new ethers.Contract(path[0], ERC20_ABI, signer);
+      const tokOut=new ethers.Contract(path[1], ERC20_ABI, provider);
+      const decIn=await tokIn.decimals();
+      const decOut=await tokOut.decimals();
+      const amountIn=ethers.utils.parseUnits(String(amt), decIn);
+      const amountOutMin=ethers.utils.parseUnits(String(minOutRaw||0), decOut);
+      const allow=await tokIn.allowance(me, routerAddr);
+      if(allow.lt(amountIn)){
+        const appr=await tokIn.approve(routerAddr, ethers.constants.MaxUint256);
+        toast("Approve in wallet…");
+        await appr.wait();
+      }
+      tx=await router.swapExactTokensForTokens(amountIn, amountOutMin, route, me, deadline);
+    }
+    toast("Swap submitted…");
+    const rc=await tx.wait();
+    const hash=(rc&&rc.transactionHash)||tx.hash;
+    $("swapBtn").textContent="OK";
+    toast("https://bscscan.com/tx/"+hash);
+    loadBound();
+  }catch(e){
+    console.error(e);
+    toast((e&&e.message)?e.message:"swap failed");
+  }finally{
+    setTimeout(()=>{$("swapBtn").textContent="SWAP";},2200);
+  }
+}
 
 function closeWm(){ const el=$("wm"); if(el) el.classList.remove("show"); }
 function toggleWm(){ const el=$("wm"); if(!el) return; el.classList.toggle("show"); }

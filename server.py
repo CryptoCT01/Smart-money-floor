@@ -20,7 +20,6 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
 from agents import anchor, helmsman, jobs, marlin, pulse, reef, swordfish  # noqa: E402
-from execution.swap import execute_swap  # noqa: E402
 from execution import altana_keystore  # noqa: E402
 import runtime  # noqa: E402
 from signals import (  # noqa: E402
@@ -36,6 +35,19 @@ from signals import (  # noqa: E402
     get_yields,
 )
 from signals.pancake_quote import quote as pancake_quote  # noqa: E402
+
+# Public Pancake V2 / BEP-20 addresses (not secrets). Visitors sign with their own wallet.
+PCS_ROUTER = "0x10ED43C718714eb63d5aA57B78B54704E256024E"
+BSC_CHAIN_ID = 56
+TOKEN_MAP = {
+    "WBNB": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    "BNB": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    "CAKE": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+    "USDT": "0x55d398326f99059fF775485246999027B3197955",
+    "USDC": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "ETH": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+    "BTCB": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+}
 from signals.paper import get_record  # noqa: E402
 PUBLIC_URL = ""
 
@@ -505,8 +517,10 @@ class Handler(SimpleHTTPRequestHandler):
                 self._json({"ok": False, "error": str(exc)}, 500)
             return
         if path == "/api/swap":
-            if os.environ.get("ALLOW_SWAP", "").strip() not in ("1", "true", "yes"):
-                self._json({"ok": False, "executed": False, "error": "SWAP disabled on public Floor"}, 403)
+            # Visitor wallet mode — never send host/TWAK txs. Client signs via MetaMask/Rabby.
+            addr = str(body.get("address") or "").strip()
+            if not (addr.startswith("0x") and len(addr) == 42):
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": "connect wallet"}, 400)
                 return
             src = str(body.get("from") or "")
             dst = str(body.get("to") or "")
@@ -514,23 +528,50 @@ class Handler(SimpleHTTPRequestHandler):
                 amt = float(body.get("amount") or 0)
             except (TypeError, ValueError):
                 amt = 0
-            prices = get_prices()
-            pxmap = {t["symbol"]: float(t.get("priceUsd") or 0) for t in (prices.get("tokens") or [])}
-            pxmap["BNB"] = float((prices.get("wbnb") or {}).get("priceUsd") or 0)
-            key = "WBNB" if src.upper() in ("BNB", "WBNB") else src.upper()
-            px = pxmap.get(key) or pxmap.get(src.upper()) or 0
+            if amt <= 0:
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": "amount"}, 400)
+                return
             with HIRE_LOCK:
                 cap = float(HIRE.get("capUsd") or 0)
                 hired = HIRE.get("agent")
+                hire_addr = (HIRE.get("address") or "").strip()
             if hired not in ("swordfish", "marlin"):
-                self._json({"ok": False, "executed": False, "error": "hire Swordfish or Marlin first"}, 400)
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": "hire Swordfish or Marlin first"}, 400)
                 return
-            result = execute_swap(src=src, dst=dst, amount=amt, cap_usd=cap, px_src=px)
-            push_feed(
-                ("swap ok " + (result.get("summary") or "")[:80]) if result.get("executed") else ("swap blocked: " + (result.get("error") or "")),
-                "ok" if result.get("executed") else "warn",
+            if hire_addr and hire_addr.lower() != addr.lower():
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": "wallet must match hired address"}, 400)
+                return
+            q = pancake_quote(src=src, dst=dst, amount=amt, prices=get_prices(), security=get_security())
+            if not q.get("ok"):
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": q.get("error") or q.get("reason") or "quote failed", "quote": q}, 400)
+                return
+            usd_in = float(q.get("usdIn") or 0)
+            if cap <= 0:
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": "hire a trading agent with a spend cap first"}, 400)
+                return
+            if usd_in > cap:
+                self._json({"ok": False, "executed": False, "mode": "wallet", "error": f"${usd_in:.2f} exceeds cap ${cap:.2f}", "quote": q}, 400)
+                return
+            push_feed(f"wallet swap quote {src}->{dst} ${usd_in:.2f} · {(addr[:8])}…", "ok")
+            self._json(
+                {
+                    "ok": True,
+                    "executed": False,
+                    "mode": "wallet",
+                    "router": PCS_ROUTER,
+                    "chainId": BSC_CHAIN_ID,
+                    "tokens": dict(TOKEN_MAP),
+                    "quote": q,
+                    "from": src,
+                    "to": dst,
+                    "amount": amt,
+                    "minOut": q.get("minOut"),
+                    "address": addr,
+                    "agent": hired,
+                    "capUsd": cap,
+                    "usdIn": usd_in,
+                }
             )
-            self._json(result, 200 if result.get("ok") else 400)
             return
         self._json({"ok": False, "error": "not found"}, 404)
 
