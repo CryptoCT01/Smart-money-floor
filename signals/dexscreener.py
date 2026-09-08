@@ -30,7 +30,7 @@ WATCH = [
 
 
 def _get(url: str) -> dict[str, Any]:
-    req = urllib.request.Request(url, headers={"User-Agent": "smart-money-floor/0.1"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"})
     with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
